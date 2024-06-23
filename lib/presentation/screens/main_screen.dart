@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:gym/constants/my_colors.dart';
+import 'package:gym/logic/class_bloc/class_bloc.dart';
+import 'package:gym/logic/equipment_bloc/equipment_bloc.dart';
 import 'package:gym/presentation/screens/main_screens/classes_screen.dart';
 import 'package:gym/presentation/screens/main_screens/home_screen.dart';
 import 'package:gym/presentation/screens/main_screens/profile_screen.dart';
@@ -26,17 +29,25 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    context.read<EquipmentBloc>().add(GetAllEquipment());
+    context.read<ClassBloc>().add(GetAllClasses());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: MyColors.mywhite,
           appBar: isLastPage
               ? null
               : AppBar(
-                  // toolbarHeight: 30,
                   centerTitle: true,
-                  backgroundColor: MyColors.mywhite,
                   title: Image.asset(
                     'assets/img/logo2.png',
                     width: MediaQuery.sizeOf(context).width / 2,

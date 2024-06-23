@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
+import 'package:gym/logic/equipment_bloc/equipment_bloc.dart';
 import 'package:gym/presentation/widgets/equipment_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -92,12 +94,20 @@ class HomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            ListView.builder(
-              itemCount: 10,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return const EquipmentCard();
+            BlocBuilder<EquipmentBloc, EquipmentState>(
+              builder: (context, state) {
+                if (state is EquipmentLoaded) {
+                  return ListView.builder(
+                    itemCount: state.equipment.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return EquipmentCard(equipment: state.equipment[index]);
+                    },
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
               },
             )
           ],

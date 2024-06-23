@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
+import 'package:gym/data/models/equipment_model.dart';
 
 class EquipmentCard extends StatelessWidget {
-  const EquipmentCard({super.key});
+  final Equipment equipment;
+  const EquipmentCard({super.key, required this.equipment});
 
   @override
   Widget build(BuildContext context) {

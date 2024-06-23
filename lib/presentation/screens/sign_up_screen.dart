@@ -62,11 +62,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(height: 10),
               ],
             ),
-            Expanded(
+            const Expanded(
               child: TabBarView(children: [
                 ParticipantSignup(),
                 TrainerSignup(),
               ]),
+            ),
+            //!Last Message
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Any proplem?',
+                  style: GoogleFonts.nunito(
+                    color: MyColors.myOrange2,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                GestureDetector(
+                  child: Text(
+                    'Contact Us',
+                    style: GoogleFonts.nunito(
+                      color: MyColors.myOrange2,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             )
           ],
         ),

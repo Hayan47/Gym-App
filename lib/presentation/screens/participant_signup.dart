@@ -69,498 +69,434 @@ class _ParticipantSignupState extends State<ParticipantSignup> {
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: Center(
-                      //?main column
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Form(
                           key: formKey,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const SizedBox(),
-                              //?second column
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      //!first name TextField
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 25),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: MyColors.myOrange2,
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10),
-                                                child: TextFormField(
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  textAlign: TextAlign.center,
-                                                  controller:
-                                                      _firstnamecontroller,
-                                                  autovalidateMode:
-                                                      AutovalidateMode
-                                                          .onUserInteraction,
-                                                  validator: (value) {
-                                                    if (value == '') {
-                                                      return 'Enter a name';
-                                                    }
-                                                    return null;
-                                                  },
-                                                  style: GoogleFonts.nunito(
-                                                    color: MyColors.mywhite,
-                                                    fontSize: 16,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    border: InputBorder.none,
-                                                    hintText: 'First Name',
-                                                    helperText: '',
-                                                    hintStyle:
-                                                        GoogleFonts.nunito(
-                                                      color: MyColors.mywhite,
-                                                      fontSize: 16,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 25),
-                                      //!last name TextField
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 25),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  color: MyColors.myOrange2,
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10),
-                                                child: TextFormField(
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  textAlign: TextAlign.center,
-                                                  controller:
-                                                      _lastnamecontroller,
-                                                  style: GoogleFonts.nunito(
-                                                    color: MyColors.mywhite,
-                                                    fontSize: 16,
-                                                  ),
-                                                  decoration: InputDecoration(
-                                                    border: InputBorder.none,
-                                                    hintText: 'Last Name',
-                                                    helperText: '',
-                                                    hintStyle:
-                                                        GoogleFonts.nunito(
-                                                      color: MyColors.mywhite,
-                                                      fontSize: 16,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  //!age Dropdown button
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      MyDropdown(
-                                        icon: 'assets/icons/age.png',
-                                        width: 80,
-                                        dropdownValue: dropDownValue,
-                                        label: 'age',
-                                        items: ages
-                                            .map(
-                                              (e) => DropdownMenuItem(
-                                                value: e,
-                                                child:
-                                                    Center(child: Text('$e')),
-                                              ),
-                                            )
-                                            .toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            dropDownValue = value;
-                                          });
-                                        },
-                                      ),
-                                      MyDropdown(
-                                        icon: 'assets/icons/gender.png',
-                                        width: 80,
-                                        dropdownValue: dropDownValue2,
-                                        label: 'gender',
-                                        items: genders
-                                            .map(
-                                              (e) => DropdownMenuItem(
-                                                value: e,
-                                                child: Center(child: Text(e)),
-                                              ),
-                                            )
-                                            .toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            dropDownValue2 = value;
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 15),
-                                  //!Phone TextField
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 25),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: MyColors.myOrange2,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: TextFormField(
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            keyboardType: TextInputType.phone,
-                                            controller: _phonecontroller,
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.length < 10) {
-                                                return 'Enter a valid phone number';
-                                              }
-                                              return null;
-                                            },
-                                            style: GoogleFonts.nunito(
-                                              color: MyColors.mywhite,
-                                              fontSize: 16,
+                                  //!first name TextField
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 25),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: MyColors.myOrange2,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: 'Phone Number...',
-                                              hintStyle: GoogleFonts.nunito(
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: TextFormField(
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              textAlign: TextAlign.center,
+                                              controller: _firstnamecontroller,
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
+                                              validator: (value) {
+                                                if (value == '') {
+                                                  return 'Enter a name';
+                                                }
+                                                return null;
+                                              },
+                                              style: GoogleFonts.nunito(
                                                 color: MyColors.mywhite,
                                                 fontSize: 16,
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  //!Email TextField
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 25),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: MyColors.myOrange2,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: TextFormField(
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                            controller: _emailcontroller,
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  !EmailValidator.validate(
-                                                      value)) {
-                                                return 'Enter a valid email';
-                                              }
-                                              return null;
-                                            },
-                                            style: GoogleFonts.nunito(
-                                              color: MyColors.mywhite,
-                                              fontSize: 16,
-                                            ),
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: 'Email...',
-                                              hintStyle: GoogleFonts.nunito(
-                                                color: MyColors.mywhite,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  //!Password TextField
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 25),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: MyColors.myOrange2,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: TextFormField(
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            keyboardType:
-                                                TextInputType.visiblePassword,
-                                            controller: _passwordcontroller,
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.length < 8) {
-                                                return 'password should be 6 chrachters or more';
-                                              }
-                                              return null;
-                                            },
-                                            style: GoogleFonts.nunito(
-                                              color: MyColors.mywhite,
-                                              fontSize: 16,
-                                            ),
-                                            obscureText: hidePassword,
-                                            decoration: InputDecoration(
-                                              suffixIcon: IconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    hidePassword =
-                                                        !hidePassword;
-                                                  });
-                                                },
-                                                icon: Icon(
-                                                  hidePassword
-                                                      ? Icons.visibility_off
-                                                      : Icons.visibility,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: 'First Name',
+                                                helperText: '',
+                                                hintStyle: GoogleFonts.nunito(
                                                   color: MyColors.mywhite,
-                                                ),
-                                              ),
-                                              border: InputBorder.none,
-                                              hintText: 'password...',
-                                              hintStyle: GoogleFonts.nunito(
-                                                color: MyColors.mywhite,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  //!Confirm Password TextField
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 25),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: MyColors.myOrange2,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: TextFormField(
-                                            textInputAction:
-                                                TextInputAction.done,
-                                            keyboardType:
-                                                TextInputType.visiblePassword,
-                                            controller:
-                                                _confirmpasswordcontroller,
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            validator: (value) {
-                                              if (value !=
-                                                  _passwordcontroller.text) {
-                                                return 'passwords not matching';
-                                              }
-                                              return null;
-                                            },
-                                            style: GoogleFonts.nunito(
-                                              color: MyColors.mywhite,
-                                              fontSize: 16,
-                                            ),
-                                            obscureText: hidePassword,
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: 'confirm password...',
-                                              hintStyle: GoogleFonts.nunito(
-                                                color: MyColors.mywhite,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  //!Signup Button
-                                  state is UserLoading
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            SizedBox(
-                                              width: 70,
-                                              height: 40,
-                                              child: Lottie.asset(
-                                                  'assets/lottie/SplashyLoader.json'),
-                                            ),
-                                          ],
-                                        )
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 40),
-                                              child: TextButton(
-                                                onPressed: () async {
-                                                  final isValid = formKey
-                                                      .currentState!
-                                                      .validate();
-                                                  if (!isValid) return;
-
-                                                  context
-                                                      .read<UserBloc>()
-                                                      .add(SignUp(
-                                                        email: _emailcontroller
-                                                            .text
-                                                            .trim(),
-                                                        password:
-                                                            _passwordcontroller
-                                                                .text
-                                                                .trim(),
-                                                        firstName:
-                                                            _firstnamecontroller
-                                                                .text
-                                                                .trim(),
-                                                        lastName:
-                                                            _lastnamecontroller
-                                                                .text
-                                                                .trim(),
-                                                        phoneNumber:
-                                                            _phonecontroller
-                                                                .text
-                                                                .trim(),
-                                                        age: dropDownValue,
-                                                        gender: dropDownValue2,
-                                                        role: 'participant',
-                                                      ));
-                                                },
-                                                style: ButtonStyle(
-                                                    shape: MaterialStateProperty
-                                                        .all(RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10))),
-                                                    fixedSize:
-                                                        MaterialStateProperty.all(
-                                                            const Size(70, 40)),
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all(MyColors
-                                                                .myOrange2)),
-                                                child: Text(
-                                                  'Sign Up',
-                                                  style: GoogleFonts.nunito(
-                                                    color: MyColors.mywhite,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                                  fontSize: 16,
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 25),
+                                  //!last name TextField
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 25),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: MyColors.myOrange2,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: TextFormField(
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              textAlign: TextAlign.center,
+                                              controller: _lastnamecontroller,
+                                              style: GoogleFonts.nunito(
+                                                color: MyColors.mywhite,
+                                                fontSize: 16,
+                                              ),
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: 'Last Name',
+                                                helperText: '',
+                                                hintStyle: GoogleFonts.nunito(
+                                                  color: MyColors.mywhite,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
-                              //!Last Message
+
+                              //!age Dropdown button
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
-                                    'Any proplem?',
-                                    style: GoogleFonts.nunito(
-                                      color: MyColors.myOrange2,
-                                      fontSize: 16,
-                                    ),
+                                  MyDropdown(
+                                    icon: 'assets/icons/age.png',
+                                    width: 80,
+                                    dropdownValue: dropDownValue,
+                                    label: 'age',
+                                    items: ages
+                                        .map(
+                                          (e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Center(child: Text('$e')),
+                                          ),
+                                        )
+                                        .toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        dropDownValue = value;
+                                      });
+                                    },
                                   ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  GestureDetector(
-                                    child: Text(
-                                      'Contact Us',
-                                      style: GoogleFonts.nunito(
-                                        color: MyColors.myOrange2,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                  MyDropdown(
+                                    icon: 'assets/icons/gender.png',
+                                    width: 80,
+                                    dropdownValue: dropDownValue2,
+                                    label: 'gender',
+                                    items: genders
+                                        .map(
+                                          (e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Center(child: Text(e)),
+                                          ),
+                                        )
+                                        .toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        dropDownValue2 = value;
+                                      });
+                                    },
                                   ),
                                 ],
-                              )
+                              ),
+                              const SizedBox(height: 15),
+                              //!Phone TextField
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: MyColors.myOrange2,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: TextFormField(
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType: TextInputType.phone,
+                                        controller: _phonecontroller,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.length < 10) {
+                                            return 'Enter a valid phone number';
+                                          }
+                                          return null;
+                                        },
+                                        style: GoogleFonts.nunito(
+                                          color: MyColors.mywhite,
+                                          fontSize: 16,
+                                        ),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Phone Number...',
+                                          hintStyle: GoogleFonts.nunito(
+                                            color: MyColors.mywhite,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              //!Email TextField
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: MyColors.myOrange2,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: TextFormField(
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        controller: _emailcontroller,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        validator: (value) {
+                                          if (value == null ||
+                                              !EmailValidator.validate(value)) {
+                                            return 'Enter a valid email';
+                                          }
+                                          return null;
+                                        },
+                                        style: GoogleFonts.nunito(
+                                          color: MyColors.mywhite,
+                                          fontSize: 16,
+                                        ),
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Email...',
+                                          hintStyle: GoogleFonts.nunito(
+                                            color: MyColors.mywhite,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              //!Password TextField
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: MyColors.myOrange2,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: TextFormField(
+                                        textInputAction: TextInputAction.next,
+                                        keyboardType:
+                                            TextInputType.visiblePassword,
+                                        controller: _passwordcontroller,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.length < 8) {
+                                            return 'password should be 6 chrachters or more';
+                                          }
+                                          return null;
+                                        },
+                                        style: GoogleFonts.nunito(
+                                          color: MyColors.mywhite,
+                                          fontSize: 16,
+                                        ),
+                                        obscureText: hidePassword,
+                                        decoration: InputDecoration(
+                                          suffixIcon: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                hidePassword = !hidePassword;
+                                              });
+                                            },
+                                            icon: Icon(
+                                              hidePassword
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                              color: MyColors.mywhite,
+                                            ),
+                                          ),
+                                          border: InputBorder.none,
+                                          hintText: 'password...',
+                                          hintStyle: GoogleFonts.nunito(
+                                            color: MyColors.mywhite,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              //!Confirm Password TextField
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: MyColors.myOrange2,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: TextFormField(
+                                        textInputAction: TextInputAction.done,
+                                        keyboardType:
+                                            TextInputType.visiblePassword,
+                                        controller: _confirmpasswordcontroller,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                        validator: (value) {
+                                          if (value !=
+                                              _passwordcontroller.text) {
+                                            return 'passwords not matching';
+                                          }
+                                          return null;
+                                        },
+                                        style: GoogleFonts.nunito(
+                                          color: MyColors.mywhite,
+                                          fontSize: 16,
+                                        ),
+                                        obscureText: hidePassword,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'confirm password...',
+                                          hintStyle: GoogleFonts.nunito(
+                                            color: MyColors.mywhite,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              //!Signup Button
+                              state is UserLoading
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        SizedBox(
+                                          width: 70,
+                                          height: 40,
+                                          child: Lottie.asset(
+                                              'assets/lottie/SplashyLoader.json'),
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 40),
+                                          child: TextButton(
+                                            onPressed: () async {
+                                              final isValid = formKey
+                                                  .currentState!
+                                                  .validate();
+                                              if (!isValid) return;
+
+                                              context
+                                                  .read<UserBloc>()
+                                                  .add(SignUp(
+                                                    email: _emailcontroller.text
+                                                        .trim(),
+                                                    password:
+                                                        _passwordcontroller.text
+                                                            .trim(),
+                                                    firstName:
+                                                        _firstnamecontroller
+                                                            .text
+                                                            .trim(),
+                                                    lastName:
+                                                        _lastnamecontroller.text
+                                                            .trim(),
+                                                    phoneNumber:
+                                                        _phonecontroller.text
+                                                            .trim(),
+                                                    age: dropDownValue,
+                                                    gender: dropDownValue2,
+                                                    role: 'participant',
+                                                  ));
+                                            },
+                                            style: ButtonStyle(
+                                                shape: WidgetStateProperty.all(
+                                                    RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10))),
+                                                fixedSize:
+                                                    WidgetStateProperty.all(
+                                                        const Size(70, 40)),
+                                                backgroundColor:
+                                                    WidgetStateProperty.all(
+                                                        MyColors.myOrange2)),
+                                            child: Text(
+                                              'Sign Up',
+                                              style: GoogleFonts.nunito(
+                                                color: MyColors.mywhite,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                             ],
                           ),
                         ),

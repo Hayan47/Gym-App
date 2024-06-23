@@ -273,18 +273,17 @@ class _LogInScreenState extends State<LogInScreen> {
                                                                   .text));
                                                 },
                                                 style: ButtonStyle(
-                                                  shape:
-                                                      MaterialStateProperty.all(
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10))),
+                                                  shape: WidgetStateProperty.all(
+                                                      RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10))),
                                                   fixedSize:
-                                                      MaterialStateProperty.all(
+                                                      WidgetStateProperty.all(
                                                           const Size(70, 40)),
                                                   backgroundColor:
-                                                      MaterialStateProperty.all(
+                                                      WidgetStateProperty.all(
                                                     MyColors.myOrange2,
                                                   ),
                                                 ),
