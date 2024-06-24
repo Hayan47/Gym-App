@@ -71,7 +71,7 @@ class TrainerDetailsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: ListTile(
               onTap: () {
-                Navigator.pushNamed(context, 'enrolledclassesscreen',
+                Navigator.pushNamed(context, 'assignedclassesscreen',
                     arguments: trainer.userid);
               },
               leading: const Icon(
@@ -80,10 +80,11 @@ class TrainerDetailsScreen extends StatelessWidget {
               ),
               title: Text(
                 'Assigned Classes',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: MyColors.myOrange2,
-                      fontSize: 18,
-                    ),
+                style: GoogleFonts.nunito(
+                  color: MyColors.myOrange2,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               trailing: const Icon(
                 Icons.keyboard_arrow_right_rounded,

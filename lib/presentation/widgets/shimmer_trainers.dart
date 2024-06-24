@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ClassesLoading extends StatelessWidget {
-  const ClassesLoading({super.key});
+class TrainerLoading extends StatelessWidget {
+  final int itemCount;
+  const TrainerLoading({super.key, required this.itemCount});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10,
+      itemCount: itemCount,
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
           baseColor: Colors.black26,
@@ -21,7 +22,7 @@ class ClassesLoading extends StatelessWidget {
                 color: Colors.white,
               ),
               width: double.infinity,
-              height: 180,
+              height: 250,
               child: const Padding(
                 padding: EdgeInsets.all(15),
               ),

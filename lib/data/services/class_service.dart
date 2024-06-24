@@ -51,4 +51,81 @@ class ClassService {
         .doc(gymclass.classid)
         .delete();
   }
+
+  //?get trainer classes
+  Future<List<GymClass>> getTrainerClasses(String trainerId) async {
+    List<GymClass> classes = [];
+    var snapshot = await _store
+        .collection('gymclass')
+        .where('trainerId', isEqualTo: trainerId)
+        .withConverter<GymClass>(
+          fromFirestore: GymClass.fromFirestore,
+          toFirestore: (gymclass, options) => gymclass.toFirestore(),
+        )
+        .get();
+
+    for (var doc in snapshot.docs) {
+      var gymclass = doc.data();
+      classes.add(gymclass);
+    }
+    return classes;
+  }
+
+  //?get participant classes
+  Future<List<GymClass>> getParticipantClasses(String participantId) async {
+    List<String> enrolledClassesIds = [];
+    List<GymClass> enrolledClasses = [];
+    var snapshot = await _store
+        .collection('users')
+        .doc(participantId)
+        .collection('details')
+        .doc('participant')
+        .get();
+
+    enrolledClassesIds = List<String>.from(snapshot.data()!['enrolledClasses']);
+
+    enrolledClasses = await getClassesByIds(enrolledClassesIds);
+
+    return enrolledClasses;
+  }
+
+  //? join class
+  Future<void> joinClass(String classId, String userId) async {
+    final DocumentReference userDocRef = _store.collection('users').doc(userId);
+    final DocumentReference classDocRef =
+        _store.collection('gymclass').doc(classId);
+
+    // Run the updates in a transaction to ensure atomicity
+    await _store.runTransaction((transaction) async {
+      // Add user ID to the class members list
+      transaction.update(classDocRef, {
+        'memberIds': FieldValue.arrayUnion([userId]),
+      });
+
+      // Add class ID to the user's enrolled classes list
+      transaction.update(userDocRef.collection('details').doc('participant'), {
+        'enrolledClasses': FieldValue.arrayUnion([classId]),
+      });
+    });
+  }
+
+  Future<List<GymClass>> getClassesByIds(List<String> classIds) async {
+    List<GymClass> classes = [];
+
+    var snapshot = await _store
+        .collection('gymclass')
+        .where(FieldPath.documentId, whereIn: classIds)
+        .withConverter<GymClass>(
+          fromFirestore: GymClass.fromFirestore,
+          toFirestore: (gymclass, options) => gymclass.toFirestore(),
+        )
+        .get();
+
+    for (var doc in snapshot.docs) {
+      var gymclass = doc.data();
+      classes.add(gymclass);
+    }
+
+    return classes;
+  }
 }

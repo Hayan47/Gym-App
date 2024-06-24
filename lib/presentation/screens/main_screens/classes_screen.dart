@@ -13,6 +13,7 @@ class ClassesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ClassBloc>().add(GetAllClasses());
     return Scaffold(
       body: BlocBuilder<ClassBloc, ClassState>(
         builder: (context, state) {

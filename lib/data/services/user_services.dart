@@ -185,13 +185,10 @@ class UserServices {
     }
 
     if (role == 'admin') {
-      print(1);
       return Admin.fromFirestore(userDoc);
     } else if (role == 'trainer') {
-      print(2);
       return Trainer.fromFirestore(userDoc, roleDoc);
     } else if (role == 'participant') {
-      print(3);
       return Participant.fromFirestore(userDoc, roleDoc);
     } else {
       return null; // Unknown role

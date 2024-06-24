@@ -593,6 +593,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                 },
               ),
             ),
+            const SizedBox(height: 15),
           ],
         ),
       ),

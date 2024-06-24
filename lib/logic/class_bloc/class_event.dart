@@ -20,3 +20,22 @@ class DeleteClass extends ClassEvent {
 
   const DeleteClass({required this.gymclass});
 }
+
+class GetTrainerClasses extends ClassEvent {
+  final String trainerId;
+
+  const GetTrainerClasses({required this.trainerId});
+}
+
+class GetParticipantClasses extends ClassEvent {
+  final String participantId;
+
+  const GetParticipantClasses({required this.participantId});
+}
+
+class JoinClass extends ClassEvent {
+  final String userId;
+  final String classId;
+
+  const JoinClass({required this.userId, required this.classId});
+}

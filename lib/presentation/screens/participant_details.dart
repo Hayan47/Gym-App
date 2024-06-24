@@ -149,10 +149,11 @@ class ParticipantDetails extends StatelessWidget {
             ),
             title: Text(
               'Enrolled Classes',
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: MyColors.myOrange2,
-                    fontSize: 18,
-                  ),
+              style: GoogleFonts.nunito(
+                color: MyColors.myOrange2,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             trailing: const Icon(
               Icons.keyboard_arrow_right_rounded,
@@ -174,10 +175,11 @@ class ParticipantDetails extends StatelessWidget {
             ),
             title: Text(
               'My Membership',
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: MyColors.myOrange2,
-                    fontSize: 18,
-                  ),
+              style: GoogleFonts.nunito(
+                color: MyColors.myOrange2,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             trailing: const Icon(
               Icons.keyboard_arrow_right_rounded,

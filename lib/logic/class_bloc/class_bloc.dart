@@ -8,15 +8,17 @@ part 'class_state.dart';
 
 class ClassBloc extends Bloc<ClassEvent, ClassState> {
   final classService = ClassService();
-  List<GymClass> classes = [];
+  List<GymClass> allClasses = [];
+  List<GymClass> trainerClasses = [];
+  List<GymClass> participantClasses = [];
   ClassBloc() : super(ClassInitial()) {
     on<GetAllClasses>(
       (event, emit) async {
         try {
           emit(ClassLoading());
           print(state);
-          classes = await classService.getAllClasses();
-          emit(ClassLoaded(gymclasses: classes));
+          allClasses = await classService.getAllClasses();
+          emit(ClassLoaded(gymclasses: allClasses));
           print(state);
         } catch (e) {
           emit(ClassError(message: e.toString()));
@@ -46,6 +48,53 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
           await classService.deleteClass(event.gymclass);
           emit(const ClassDeleted(message: 'Class Deleted Successfully'));
           // add(GetAllCarsEvent());
+          print(state);
+        } catch (e) {
+          emit(ClassError(message: e.toString()));
+          print(state);
+        }
+      },
+    );
+
+    on<GetTrainerClasses>(
+      (event, emit) async {
+        try {
+          emit(ClassLoading());
+          print(state);
+          trainerClasses =
+              await classService.getTrainerClasses(event.trainerId);
+          emit(ClassLoaded(gymclasses: trainerClasses));
+          print(state);
+        } catch (e) {
+          emit(ClassError(message: e.toString()));
+          print(state);
+        }
+      },
+    );
+
+    on<GetParticipantClasses>(
+      (event, emit) async {
+        try {
+          emit(ClassLoading());
+          print(state);
+          participantClasses =
+              await classService.getParticipantClasses(event.participantId);
+          emit(ClassLoaded(gymclasses: participantClasses));
+          print(state);
+        } catch (e) {
+          emit(ClassError(message: e.toString()));
+          print(state);
+        }
+      },
+    );
+
+    on<JoinClass>(
+      (event, emit) async {
+        try {
+          emit(ClassLoading());
+          print(state);
+          await classService.joinClass(event.classId, event.userId);
+          emit(const ClassJoined(message: 'class joined successfully'));
           print(state);
         } catch (e) {
           emit(ClassError(message: e.toString()));

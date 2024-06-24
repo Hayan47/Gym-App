@@ -46,3 +46,12 @@ final class ClassDeleted extends ClassState {
   @override
   List<Object> get props => [message];
 }
+
+final class ClassJoined extends ClassState {
+  final String message;
+
+  const ClassJoined({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

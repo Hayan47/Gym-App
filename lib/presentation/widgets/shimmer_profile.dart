@@ -9,7 +9,7 @@ class ProfileLoading extends StatelessWidget {
     return ListView(
       children: [
         Shimmer.fromColors(
-          baseColor: Colors.black54,
+          baseColor: Colors.black26,
           highlightColor: Colors.white10,
           period: const Duration(milliseconds: 500),
           child: Column(
@@ -51,19 +51,21 @@ class ProfileLoading extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-
               //! SizedBox
               const SizedBox(height: 12),
-
-              //!sign out
+              //!My Reservations
               Container(
-                width: 100,
+                // padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 height: 50,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
+
+              //! SizedBox
+              const SizedBox(height: 12),
             ],
           ),
         ),

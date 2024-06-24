@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:gym/constants/my_colors.dart';
+import 'package:gym/logic/auth_cubit/auth_cubit.dart';
 import 'package:gym/logic/class_bloc/class_bloc.dart';
 import 'package:gym/logic/equipment_bloc/equipment_bloc.dart';
+import 'package:gym/logic/trainers_bloc/trainers_bloc.dart';
+import 'package:gym/logic/user_bloc/user_bloc.dart';
 import 'package:gym/presentation/screens/main_screens/classes_screen.dart';
 import 'package:gym/presentation/screens/main_screens/home_screen.dart';
 import 'package:gym/presentation/screens/main_screens/profile_screen.dart';
@@ -37,6 +40,11 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> loadData() async {
     context.read<EquipmentBloc>().add(GetAllEquipment());
     context.read<ClassBloc>().add(GetAllClasses());
+    context.read<TrainersBloc>().add(GetAllTrainers());
+    final state = BlocProvider.of<AuthCubit>(context).state;
+    if (state is Authenticated) {
+      context.read<UserBloc>().add(GetUserInfo(userID: state.user.uid));
+    }
   }
 
   @override
