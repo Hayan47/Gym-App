@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class Usr {
+class Usr extends Equatable {
   String userid;
   String firstName;
   String lastName;
@@ -53,6 +54,19 @@ class Usr {
       "role": role,
     };
   }
+
+  @override
+  List<Object?> get props => [
+        userid,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        profilePicture,
+        age,
+        gender,
+        role,
+      ];
 }
 
 class Admin extends Usr {
@@ -97,6 +111,19 @@ class Admin extends Usr {
       'gender': gender,
     };
   }
+
+  @override
+  List<Object?> get props => [
+        userid,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        profilePicture,
+        age,
+        gender,
+        role,
+      ];
 }
 
 class Participant extends Usr {
@@ -176,6 +203,26 @@ class Participant extends Usr {
       'weight': weight,
     };
   }
+
+  @override
+  List<Object?> get props => [
+        userid,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        profilePicture,
+        age,
+        gender,
+        role,
+        membershipId,
+        membershipType,
+        membershipExpiry,
+        enrolledClasses,
+        attendanceRecord,
+        height,
+        weight,
+      ];
 }
 
 class Trainer extends Usr {
@@ -185,6 +232,7 @@ class Trainer extends Usr {
   final List<String> assignedClasses;
   final String bio;
   final double rating;
+  final int numberOfRatings;
 
   Trainer({
     required super.userid,
@@ -202,6 +250,7 @@ class Trainer extends Usr {
     required this.assignedClasses,
     required this.bio,
     required this.rating,
+    required this.numberOfRatings,
   });
 
   factory Trainer.fromFirestore(
@@ -225,7 +274,8 @@ class Trainer extends Usr {
       ),
       assignedClasses: List<String>.from(roleData['assignedClasses']),
       bio: roleData['bio'],
-      rating: roleData['rating'],
+      rating: double.parse(roleData['rating'].toString()),
+      numberOfRatings: roleData['numberOfRatings'],
     );
   }
 
@@ -246,6 +296,27 @@ class Trainer extends Usr {
       'assignedClasses': assignedClasses,
       'bio': bio,
       'rating': rating,
+      'numberOfRatings': numberOfRatings,
     };
   }
+
+  @override
+  List<Object?> get props => [
+        userid,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        profilePicture,
+        age,
+        gender,
+        role,
+        specializations,
+        certifications,
+        schedule,
+        assignedClasses,
+        bio,
+        rating,
+        numberOfRatings,
+      ];
 }

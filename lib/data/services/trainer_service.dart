@@ -23,4 +23,56 @@ class TrainerService {
     }
     return trainers;
   }
+
+  //?rate trainer
+  Future<void> rateTrainer(
+      String trainerId, String userId, double rating) async {
+    // Create a new rating document
+    final ratingDoc = _store
+        .collection('users')
+        .doc(trainerId)
+        .collection('ratings')
+        .doc(userId);
+
+    // Add or update the rating
+    await ratingDoc.set({
+      'rating': rating,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+
+    // Update the trainer's average rating
+    await _updateTrainerRating(trainerId);
+  }
+
+  Future<void> _updateTrainerRating(String trainerId) async {
+    // Get all ratings for the trainer
+    final ratingsSnapshot = await _store
+        .collection('users')
+        .doc(trainerId)
+        .collection('ratings')
+        .get();
+
+    // if (ratingsSnapshot.docs.isEmpty) return;
+
+    // Calculate the new average rating
+    double totalRating = 0;
+    int numberOfRatings = ratingsSnapshot.docs.length;
+
+    for (var doc in ratingsSnapshot.docs) {
+      totalRating += doc.data()['rating'];
+    }
+
+    double averageRating = totalRating / numberOfRatings;
+
+    // Update the trainer document with the new average rating and number of ratings
+    await _store
+        .collection('users')
+        .doc(trainerId)
+        .collection('details')
+        .doc('trainer')
+        .update({
+      'rating': averageRating,
+      'numberOfRatings': numberOfRatings,
+    });
+  }
 }

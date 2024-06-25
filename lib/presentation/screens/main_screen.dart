@@ -41,104 +41,107 @@ class _MainScreenState extends State<MainScreen> {
     context.read<EquipmentBloc>().add(GetAllEquipment());
     context.read<ClassBloc>().add(GetAllClasses());
     context.read<TrainersBloc>().add(GetAllTrainers());
-    final state = BlocProvider.of<AuthCubit>(context).state;
-    if (state is Authenticated) {
-      context.read<UserBloc>().add(GetUserInfo(userID: state.user.uid));
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: isLastPage
-              ? null
-              : AppBar(
-                  centerTitle: true,
-                  title: Image.asset(
-                    'assets/img/logo2.png',
-                    width: MediaQuery.sizeOf(context).width / 2,
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is Authenticated) {
+          context.read<UserBloc>().add(GetUserInfo(userID: state.user.uid));
+        }
+      },
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: isLastPage
+                ? null
+                : AppBar(
+                    centerTitle: true,
+                    title: Image.asset(
+                      'assets/img/logo2.png',
+                      width: MediaQuery.sizeOf(context).width / 2,
+                    ),
+                  ),
+            body: SizedBox.expand(
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _pageController,
+                onPageChanged: (index) {
+                  setState(() {
+                    isLastPage = index == 3;
+                  });
+                },
+                children: _screens,
+              ),
+            ),
+          ),
+
+          //!Google Nav Example
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xff1E1E24),
+                  borderRadius: BorderRadius.circular(45),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                  child: GNav(
+                    gap: 9,
+                    haptic: false,
+                    iconSize: 20,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 11, horizontal: 8),
+                    backgroundColor: MyColors.myGrey,
+                    color: MyColors.mywhite,
+                    activeColor: MyColors.mywhite,
+                    textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: MyColors.mywhite,
+                          fontSize: 16,
+                        ),
+                    tabs: const [
+                      GButton(
+                        icon: FontAwesomeIcons.house,
+                        text: 'home',
+                        iconSize: 20,
+                      ),
+                      GButton(
+                        icon: FontAwesomeIcons.dumbbell,
+                        text: 'classes',
+                        iconSize: 20,
+                      ),
+                      GButton(
+                        padding: EdgeInsets.symmetric(horizontal: 2),
+                        icon: FontAwesomeIcons.personRunning,
+                        text: 'trainers',
+                        iconSize: 25,
+                      ),
+                      GButton(
+                        icon: FontAwesomeIcons.solidUser,
+                        text: 'profile',
+                        iconSize: 20,
+                      ),
+                    ],
+                    onTabChange: (index) {
+                      _pageController.animateToPage(
+                        index,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.fastLinearToSlowEaseIn,
+                      );
+                    },
+                    curve: Curves.fastOutSlowIn,
+                    duration: const Duration(milliseconds: 300),
                   ),
                 ),
-          body: SizedBox.expand(
-            child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() {
-                  isLastPage = index == 3;
-                });
-              },
-              children: _screens,
-            ),
-          ),
-        ),
-
-        //!Google Nav Example
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xff1E1E24),
-                borderRadius: BorderRadius.circular(45),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-                child: GNav(
-                  gap: 9,
-                  haptic: false,
-                  iconSize: 20,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 11, horizontal: 8),
-                  backgroundColor: MyColors.myGrey,
-                  color: MyColors.mywhite,
-                  activeColor: MyColors.mywhite,
-                  textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: MyColors.mywhite,
-                        fontSize: 16,
-                      ),
-                  tabs: const [
-                    GButton(
-                      icon: FontAwesomeIcons.house,
-                      text: 'home',
-                      iconSize: 20,
-                    ),
-                    GButton(
-                      icon: FontAwesomeIcons.dumbbell,
-                      text: 'classes',
-                      iconSize: 20,
-                    ),
-                    GButton(
-                      padding: EdgeInsets.symmetric(horizontal: 2),
-                      icon: FontAwesomeIcons.personRunning,
-                      text: 'trainers',
-                      iconSize: 25,
-                    ),
-                    GButton(
-                      icon: FontAwesomeIcons.solidUser,
-                      text: 'profile',
-                      iconSize: 20,
-                    ),
-                  ],
-                  onTabChange: (index) {
-                    _pageController.animateToPage(
-                      index,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.fastLinearToSlowEaseIn,
-                    );
-                  },
-                  curve: Curves.fastOutSlowIn,
-                  duration: const Duration(milliseconds: 300),
-                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

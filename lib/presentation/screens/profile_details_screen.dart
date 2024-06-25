@@ -9,10 +9,10 @@ import 'package:gym/presentation/screens/trainer_details_screen.dart';
 import 'package:gym/presentation/widgets/add_phone_number.dart';
 import 'package:gym/presentation/widgets/alert_dialog.dart';
 import 'package:gym/presentation/widgets/shimmer_profile.dart';
-import 'package:gym/presentation/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym/constants/my_colors.dart';
+import 'package:gym/presentation/widgets/toast.dart';
 
 class ProfileDetailsScreen extends StatelessWidget {
   const ProfileDetailsScreen({super.key});
@@ -110,24 +110,26 @@ class ProfileDetailsScreen extends StatelessWidget {
                     child: BlocConsumer<UploadBloc, UploadState>(
                       listener: (context, state) {
                         if (state is UploadFailedState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            MySnackBar(
-                              icon: const Icon(Icons.error,
-                                  color: MyColors.myred2, size: 18),
-                              message: state.message,
-                              margin: 70,
+                          showToastMessage(
+                            context,
+                            state.message,
+                            const Icon(
+                              Icons.error,
+                              color: MyColors.myred2,
+                              size: 20,
                             ),
                           );
                         } else if (state is UploadSuccessState) {
                           context.read<UserBloc>().add(AddUserImage(
                               imageUrl: state.imageUrl,
                               userID: userState.userInfo.userid));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            MySnackBar(
-                              icon: const Icon(Icons.done,
-                                  color: Colors.green, size: 18),
-                              message: state.message,
-                              margin: 70,
+                          showToastMessage(
+                            context,
+                            state.message,
+                            const Icon(
+                              Icons.done,
+                              color: Colors.green,
+                              size: 20,
                             ),
                           );
                         }

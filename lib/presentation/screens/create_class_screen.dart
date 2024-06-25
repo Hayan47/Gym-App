@@ -9,8 +9,8 @@ import 'package:gym/data/models/usr_model.dart';
 import 'package:gym/logic/class_bloc/class_bloc.dart';
 import 'package:gym/logic/image_bloc/image_bloc.dart';
 import 'package:gym/logic/upload_bloc/upload_bloc.dart';
-import 'package:gym/presentation/widgets/snackbar.dart';
 import 'package:gym/presentation/widgets/textField.dart';
+import 'package:gym/presentation/widgets/toast.dart';
 import 'package:lottie/lottie.dart';
 
 class CreateClassScreen extends StatefulWidget {
@@ -403,12 +403,13 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
               child: BlocConsumer<ImageBloc, ImageState>(
                 listener: (context, state) {
                   if (state is ImageError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      MySnackBar(
-                        icon: const Icon(Icons.error,
-                            color: MyColors.myred2, size: 18),
-                        message: state.errorMessage,
-                        margin: 5,
+                    showToastMessage(
+                      context,
+                      state.errorMessage,
+                      const Icon(
+                        Icons.error,
+                        color: MyColors.myred2,
+                        size: 20,
                       ),
                     );
                   }
@@ -461,12 +462,13 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
               child: BlocConsumer<UploadBloc, UploadState>(
                 listener: (context, state) {
                   if (state is UploadFailedState) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      MySnackBar(
-                        icon: const Icon(Icons.error,
-                            color: MyColors.myred2, size: 18),
-                        message: state.message,
-                        margin: 5,
+                    showToastMessage(
+                      context,
+                      state.message,
+                      const Icon(
+                        Icons.error,
+                        color: MyColors.myred2,
+                        size: 20,
                       ),
                     );
                   } else if (state is UploadSuccessState) {
@@ -516,12 +518,13 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                     return BlocConsumer<ClassBloc, ClassState>(
                         listener: (context, state) {
                       if (state is ClassAdded) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          MySnackBar(
-                            icon: const Icon(Icons.done,
-                                color: Colors.green, size: 18),
-                            message: state.message,
-                            margin: 80,
+                        showToastMessage(
+                          context,
+                          state.message,
+                          const Icon(
+                            Icons.error,
+                            color: MyColors.myred2,
+                            size: 20,
                           ),
                         );
                         // AppRouter().disposeAddCarBlocs();
@@ -531,12 +534,13 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                           (Route<dynamic> route) => false,
                         );
                       } else if (state is ClassError) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          MySnackBar(
-                            icon: const Icon(Icons.error,
-                                color: MyColors.myred2, size: 18),
-                            message: state.message,
-                            margin: 5,
+                        showToastMessage(
+                          context,
+                          state.message,
+                          const Icon(
+                            Icons.error,
+                            color: MyColors.myred2,
+                            size: 20,
                           ),
                         );
                       }

@@ -1,9 +1,9 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
-import 'package:gym/presentation/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/constants/my_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym/presentation/widgets/toast.dart';
 
 class AddWeight extends StatelessWidget {
   final String id;
@@ -17,18 +17,20 @@ class AddWeight extends StatelessWidget {
       listener: (context, state) {
         if (state is UserInitial) {
           Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            MySnackBar(
-              icon: const Icon(Icons.done, color: Colors.green, size: 18),
-              message: 'Weight has been added',
-              margin: 70,
+          showToastMessage(
+            context,
+            'Weight has been added',
+            const Icon(
+              Icons.done,
+              color: Colors.green,
+              size: 18,
             ),
           );
         }
       },
       builder: (context, state) {
         return AlertDialog(
-          backgroundColor: MyColors.myOrange2,
+          backgroundColor: MyColors.myOrange3,
           elevation: 0,
           insetPadding: const EdgeInsets.symmetric(horizontal: 25),
           shape: const RoundedRectangleBorder(
@@ -113,10 +115,10 @@ class AddWeight extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: MyColors.mywhite,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(6),
                     border: Border.all(
                       color: MyColors.myGrey,
-                      width: 2,
+                      width: 1,
                     ),
                   ),
                   child: Padding(

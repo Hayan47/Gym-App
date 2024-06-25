@@ -1,10 +1,10 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
-import 'package:gym/presentation/widgets/snackbar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym/presentation/widgets/toast.dart';
 import 'package:lottie/lottie.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -24,15 +24,16 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.mywhite,
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
           if (state is UserError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              MySnackBar(
-                icon: const Icon(Icons.error, color: MyColors.myred2, size: 18),
-                message: state.errorMessage,
-                margin: 5,
+            showToastMessage(
+              context,
+              state.errorMessage,
+              const Icon(
+                Icons.error,
+                color: MyColors.myred2,
+                size: 20,
               ),
             );
           } else if (state is UserLoaded) {
@@ -41,11 +42,13 @@ class _LogInScreenState extends State<LogInScreen> {
               'mainscreen',
               (Route<dynamic> route) => false,
             );
-            ScaffoldMessenger.of(context).showSnackBar(
-              MySnackBar(
-                icon: const Icon(Icons.done, color: Colors.green, size: 18),
-                message: 'welcome back  ${state.userInfo.firstName}',
-                margin: 70,
+            showToastMessage(
+              context,
+              'welcome back  ${state.userInfo.firstName}',
+              const Icon(
+                Icons.done,
+                color: Colors.green,
+                size: 20,
               ),
             );
           }

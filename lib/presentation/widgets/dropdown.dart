@@ -65,7 +65,7 @@ class MyDropdown extends StatelessWidget {
                 // elevation: 2,
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
-                  color: MyColors.mywhite,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: MyColors.myOrange2,
@@ -88,13 +88,13 @@ class MyDropdown extends StatelessWidget {
                 width: width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: MyColors.mywhite,
+                  color: Colors.white,
                 ),
                 offset: const Offset(5, -3),
                 scrollbarTheme: ScrollbarThemeData(
                   radius: const Radius.circular(40),
-                  thickness: MaterialStateProperty.all(6),
-                  thumbColor: MaterialStateProperty.all(MyColors.myOrange2),
+                  thickness: WidgetStateProperty.all(6),
+                  thumbColor: WidgetStateProperty.all(MyColors.myOrange2),
                 ),
               ),
             ),

@@ -36,7 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
         ),
-        backgroundColor: MyColors.mywhite,
         body: Column(
           children: [
             Column(

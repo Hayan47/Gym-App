@@ -23,6 +23,7 @@ class TrainersBloc extends Bloc<TrainersEvent, TrainersState> {
         } catch (e) {
           emit(TrainersError(message: e.toString()));
           print(state);
+          print(e);
         }
       },
     );
@@ -35,6 +36,22 @@ class TrainersBloc extends Bloc<TrainersEvent, TrainersState> {
           final Trainer trainer =
               await userServices.getUserInfo(event.trainerId) as Trainer;
           emit(TrainerLoaded(trainer: trainer));
+          print(state);
+        } catch (e) {
+          emit(TrainersError(message: e.toString()));
+          print(state);
+        }
+      },
+    );
+
+    on<RateTrainerEvent>(
+      (event, emit) async {
+        try {
+          emit(TrainersLoading());
+          print(state);
+          trainerService.rateTrainer(
+              event.trainerId, event.userId, event.rating);
+          emit(const TrainerRated(message: 'Trainer Rated Successfully'));
           print(state);
         } catch (e) {
           emit(TrainersError(message: e.toString()));

@@ -11,7 +11,12 @@ class TrainersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<TrainersBloc>().add(GetAllTrainers());
     return Scaffold(
-      body: BlocBuilder<TrainersBloc, TrainersState>(
+      body: BlocConsumer<TrainersBloc, TrainersState>(
+        listener: (context, state) {
+          if (state is! TrainersLoaded && state is! TrainersLoading) {
+            context.read<TrainersBloc>().add(GetAllTrainers());
+          }
+        },
         builder: (context, state) {
           if (state is TrainersLoaded) {
             return ListView.builder(
@@ -21,7 +26,7 @@ class TrainersScreen extends StatelessWidget {
               },
             );
           } else {
-            return const TrainerLoading(itemCount: 10);
+            return const TrainerLoading();
           }
         },
       ),

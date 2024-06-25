@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
 import 'package:gym/presentation/widgets/dropdown.dart';
-import 'package:gym/presentation/widgets/snackbar.dart';
+import 'package:gym/presentation/widgets/toast.dart';
 import 'package:lottie/lottie.dart';
 
 class ParticipantSignup extends StatefulWidget {
@@ -37,11 +37,13 @@ class _ParticipantSignupState extends State<ParticipantSignup> {
     return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
         if (state is UserError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            MySnackBar(
-              icon: const Icon(Icons.error, color: MyColors.myred2, size: 18),
-              message: state.errorMessage,
-              margin: 5,
+          showToastMessage(
+            context,
+            state.errorMessage,
+            const Icon(
+              Icons.error,
+              color: MyColors.myred2,
+              size: 20,
             ),
           );
         } else if (state is UserLoaded) {
@@ -50,11 +52,13 @@ class _ParticipantSignupState extends State<ParticipantSignup> {
             'mainscreen',
             (Route<dynamic> route) => false,
           );
-          ScaffoldMessenger.of(context).showSnackBar(
-            MySnackBar(
-              icon: const Icon(Icons.done, color: Colors.green, size: 18),
-              message: 'welcome ${state.userInfo.firstName}',
-              margin: 70,
+          showToastMessage(
+            context,
+            'welcome ${state.userInfo.firstName}',
+            const Icon(
+              Icons.done,
+              color: Colors.green,
+              size: 20,
             ),
           );
         }

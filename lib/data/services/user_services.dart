@@ -35,6 +35,7 @@ class UserServices {
     List<String>? assignedClasses,
     String? bio,
     double? rating,
+    int? numberOfRatings,
     // Additional fields for Participant
     String? membershipId,
     String? membershipType,
@@ -68,6 +69,7 @@ class UserServices {
       assignedClasses: assignedClasses,
       bio: bio,
       rating: rating,
+      numberOfRatings: numberOfRatings,
       membershipId: membershipId,
       membershipType: membershipType,
       membershipExpiry: membershipExpiry,
@@ -98,6 +100,7 @@ class UserServices {
     List<String>? assignedClasses,
     String? bio,
     double? rating,
+    int? numberOfRatings,
     // Additional fields for Participant
     String? membershipId,
     String? membershipType,
@@ -132,6 +135,7 @@ class UserServices {
         'assignedClasses': assignedClasses ?? [],
         'bio': bio ?? '',
         'rating': rating ?? 0.0,
+        'numberOfRatings': numberOfRatings ?? 0,
       });
     } else if (role == 'participant') {
       roleData.addAll({

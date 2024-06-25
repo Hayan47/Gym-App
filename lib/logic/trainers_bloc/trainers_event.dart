@@ -14,3 +14,12 @@ class GetTrainer extends TrainersEvent {
 
   const GetTrainer({required this.trainerId});
 }
+
+class RateTrainerEvent extends TrainersEvent {
+  final String trainerId;
+  final String userId;
+  final double rating;
+
+  const RateTrainerEvent(
+      {required this.trainerId, required this.userId, required this.rating});
+}
