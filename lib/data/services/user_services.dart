@@ -130,8 +130,6 @@ class UserServices {
     if (role == 'trainer') {
       roleData.addAll({
         'specializations': specializations ?? [],
-        'certifications': certifications ?? [],
-        'schedule': schedule ?? {},
         'assignedClasses': assignedClasses ?? [],
         'bio': bio ?? '',
         'rating': rating ?? 0.0,
@@ -139,14 +137,7 @@ class UserServices {
       });
     } else if (role == 'participant') {
       roleData.addAll({
-        'membershipId': membershipId ?? '',
-        'membershipType': membershipType ?? '',
-        'membershipExpiry': membershipExpiry?.toIso8601String() ?? '',
         'enrolledClasses': enrolledClasses ?? [],
-        'attendanceRecord': attendanceRecord?.map(
-              (k, v) => MapEntry(k.toIso8601String(), v),
-            ) ??
-            {},
         'height': height ?? 0,
         'weight': weight ?? 0,
       });
@@ -184,9 +175,9 @@ class UserServices {
     final roleDoc = await userDocRef.collection('details').doc(role).get();
     print(roleDoc);
 
-    if (!roleDoc.exists) {
-      return null; // Role details not found
-    }
+    // if (!roleDoc.exists) {
+    //   return null; // Role details not found
+    // }
 
     if (role == 'admin') {
       return Admin.fromFirestore(userDoc);

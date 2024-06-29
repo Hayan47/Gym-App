@@ -7,6 +7,7 @@ import 'package:gym/data/models/usr_model.dart';
 import 'package:gym/logic/class_bloc/class_bloc.dart';
 import 'package:gym/logic/trainers_bloc/trainers_bloc.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
+import 'package:gym/presentation/widgets/alert_dialog.dart';
 import 'package:gym/presentation/widgets/shimmer_card.dart';
 import 'package:gym/presentation/widgets/shimmer_trainers.dart';
 import 'package:gym/presentation/widgets/toast.dart';
@@ -363,6 +364,84 @@ class ClassDetailsScreen extends StatelessWidget {
                         }
                       },
                     );
+                  } else if (userstate.userInfo is Trainer) {
+                    if (userstate.userInfo.userid == gymClass.trainerId) {
+                      return BlocConsumer<ClassBloc, ClassState>(
+                        listener: (context, state) {
+                          if (state is ClassDeleted) {
+                            showToastMessage(
+                              context,
+                              state.message,
+                              const Icon(
+                                Icons.done,
+                                color: Colors.green,
+                                size: 20,
+                              ),
+                            );
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            context.read<ClassBloc>().add(GetAllClasses());
+                          } else if (state is ClassError) {
+                            showToastMessage(
+                              context,
+                              state.message,
+                              const Icon(
+                                Icons.error,
+                                color: MyColors.myred2,
+                                size: 20,
+                              ),
+                            );
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is ClassLoading) {
+                            return SizedBox(
+                              width: 70,
+                              height: 40,
+                              child: Lottie.asset(
+                                  'assets/lottie/SplashyLoader.json'),
+                            );
+                          } else {
+                            return TextButton(
+                              onPressed: () async {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return MyAlertDialog(
+                                        onPressed: () {
+                                          context.read<ClassBloc>().add(
+                                                DeleteClass(gymclass: gymClass),
+                                              );
+                                        },
+                                        text:
+                                            'Are you sure you want to delete class?');
+                                  },
+                                );
+                              },
+                              style: ButtonStyle(
+                                  shape: WidgetStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8))),
+                                  fixedSize: WidgetStateProperty.all(
+                                      const Size(160, 40)),
+                                  backgroundColor: WidgetStateProperty.all(
+                                      MyColors.myOrange2)),
+                              child: Text(
+                                'Delete Class',
+                                style: GoogleFonts.nunito(
+                                  color: MyColors.mywhite,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
                   } else {
                     return Container();
                   }

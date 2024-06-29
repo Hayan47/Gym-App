@@ -32,7 +32,6 @@ class ProfileScreen extends StatelessWidget {
               AppBar(
                 // toolbarHeight: 30,
                 centerTitle: true,
-                backgroundColor: MyColors.mywhite,
                 title: Image.asset(
                   'assets/img/logo2.png',
                   width: MediaQuery.sizeOf(context).width / 2,

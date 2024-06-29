@@ -5,6 +5,7 @@ import 'package:gym/constants/my_colors.dart';
 import 'package:gym/logic/class_bloc/class_bloc.dart';
 import 'package:gym/presentation/widgets/class_card.dart';
 import 'package:gym/presentation/widgets/shimmer_classes.dart';
+import 'package:lottie/lottie.dart';
 
 class EnrolledClassesScreen extends StatelessWidget {
   final String participantId;
@@ -16,7 +17,9 @@ class EnrolledClassesScreen extends StatelessWidget {
         .read<ClassBloc>()
         .add(GetParticipantClasses(participantId: participantId));
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(
           'Enrolled Classes',
           style: GoogleFonts.nunito(
@@ -29,12 +32,36 @@ class EnrolledClassesScreen extends StatelessWidget {
       body: BlocBuilder<ClassBloc, ClassState>(
         builder: (context, state) {
           if (state is ClassLoaded) {
-            return ListView.builder(
-              itemCount: state.gymclasses.length,
-              itemBuilder: (context, index) {
-                return ClassCard(gymClass: state.gymclasses[index]);
-              },
-            );
+            if (state.gymclasses.isEmpty) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.4,
+                      child: Image.asset(
+                        'assets/lottie/gym_class.jpg',
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Join classes to get fit!',
+                    style: GoogleFonts.nunito(
+                      color: MyColors.myOrange2,
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return ListView.builder(
+                itemCount: state.gymclasses.length,
+                itemBuilder: (context, index) {
+                  return ClassCard(gymClass: state.gymclasses[index]);
+                },
+              );
+            }
           } else {
             return const ClassesLoading();
           }

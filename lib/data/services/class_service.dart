@@ -84,6 +84,10 @@ class ClassService {
 
     enrolledClassesIds = List<String>.from(snapshot.data()!['enrolledClasses']);
 
+    if (enrolledClassesIds.isEmpty) {
+      return [];
+    }
+
     enrolledClasses = await getClassesByIds(enrolledClassesIds);
 
     return enrolledClasses;

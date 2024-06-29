@@ -25,7 +25,7 @@ class EquipmentBloc extends Bloc<EquipmentEvent, EquipmentState> {
       },
     );
 
-    on<AddEquipment>(
+    on<AddEquipmentEvent>(
       (event, emit) async {
         try {
           emit(EquipmentLoading());

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
@@ -10,7 +11,7 @@ class EquipmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: MyColors.mywhite,
+      color: MyColors.myGrey,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -18,21 +19,23 @@ class EquipmentCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset('assets/img/Treadmill.jpg'),
+              child: CachedNetworkImage(
+                imageUrl: equipment.imagePath,
+              ),
             ),
             const SizedBox(height: 10),
             Text(
-              'Treadmill',
+              equipment.name,
               style: GoogleFonts.nunito(
-                color: MyColors.myOrange,
+                color: MyColors.myOrange2,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'A machine for walking or running while staying in one place. Ideal for cardio workouts and improving endurance.',
+              equipment.description,
               style: GoogleFonts.nunito(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 16,
               ),
             ),
@@ -42,15 +45,15 @@ class EquipmentCard extends StatelessWidget {
                   TextSpan(
                     text: 'Location: ',
                     style: GoogleFonts.nunito(
-                      color: Colors.black,
+                      color: MyColors.myOrange2,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextSpan(
-                    text: 'Cardio Section',
+                    text: equipment.location,
                     style: GoogleFonts.nunito(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 16,
                     ),
                   ),
@@ -63,75 +66,67 @@ class EquipmentCard extends StatelessWidget {
                   TextSpan(
                     text: 'Usage: ',
                     style: GoogleFonts.nunito(
-                      color: Colors.black,
+                      color: MyColors.myOrange2,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextSpan(
-                    text:
-                        'Start at a slow pace and gradually increase the speed. Always use the safety key.',
+                    text: equipment.usageInstructions,
                     style: GoogleFonts.nunito(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 16,
                     ),
                   ),
                 ],
               ),
             ),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                'Safty Tips:',
-                style: GoogleFonts.nunito(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                '1- Wear proper running shoes.',
-                style: GoogleFonts.nunito(
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
-              ),
-              Text(
-                '2- Attach the safety key to your clothing.',
-                style: GoogleFonts.nunito(
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
-              ),
-              Text(
-                '3- Stay hydrated and take breaks as needed.',
-                style: GoogleFonts.nunito(
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
-              ),
-            ]),
             Text(
-              'Tutorial Links:',
+              'Safty Tips:',
               style: GoogleFonts.nunito(
-                color: Colors.black,
+                color: MyColors.myOrange2,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text(
-              'https://example.com/treadmill-usage',
-              style: GoogleFonts.nunito(
-                color: Colors.black,
-                fontSize: 16,
-              ),
+            ...List.generate(
+              equipment.safetyTips.length,
+              (index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Text(
+                    "${index + 1}- ${equipment.safetyTips[index]}",
+                    style: GoogleFonts.nunito(
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
+                  ),
+                );
+              },
             ),
             Text(
-              'https://example.com/treadmill-safety',
+              'Tutorial Links:',
               style: GoogleFonts.nunito(
-                color: Colors.black,
+                color: MyColors.myOrange2,
                 fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
-            )
+            ),
+            ...List.generate(
+              equipment.tutorialLinks.length,
+              (index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Text(
+                    "${index + 1}- ${equipment.tutorialLinks[index]}",
+                    style: GoogleFonts.nunito(
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

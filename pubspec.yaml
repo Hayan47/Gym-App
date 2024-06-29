@@ -30,8 +30,10 @@ dependencies:
   google_sign_in: ^6.2.1
   image: ^4.2.0
   image_picker: ^1.1.2
+  intl: ^0.19.0
   lottie: ^3.1.2
   shimmer: ^3.0.0
+  syncfusion_flutter_datepicker: ^26.1.39
   url_launcher: ^6.3.0
 
 dev_dependencies:

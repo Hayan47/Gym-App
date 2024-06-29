@@ -4,48 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
-import 'package:gym/data/models/class_model.dart';
-import 'package:gym/data/models/usr_model.dart';
-import 'package:gym/logic/class_bloc/class_bloc.dart';
+import 'package:gym/data/models/equipment_model.dart';
+import 'package:gym/logic/equipment_bloc/equipment_bloc.dart';
 import 'package:gym/logic/image_bloc/image_bloc.dart';
 import 'package:gym/logic/upload_bloc/upload_bloc.dart';
 import 'package:gym/presentation/widgets/textField.dart';
 import 'package:gym/presentation/widgets/toast.dart';
 import 'package:lottie/lottie.dart';
 
-class CreateClassScreen extends StatefulWidget {
-  final Trainer trainer;
-  const CreateClassScreen({super.key, required this.trainer});
+class AddEquipmentScreen extends StatefulWidget {
+  const AddEquipmentScreen({super.key});
 
   @override
-  State<CreateClassScreen> createState() => _CreateClassScreenState();
+  State<AddEquipmentScreen> createState() => _AddEquipmentScreenState();
 }
 
-class _CreateClassScreenState extends State<CreateClassScreen> {
-  final _classNameController = TextEditingController();
+class _AddEquipmentScreenState extends State<AddEquipmentScreen> {
+  final _equipmentNameController = TextEditingController();
+  final _equipmentDiscriptionController = TextEditingController();
+  final _equipmentLocationController = TextEditingController();
+  final _equipmentUsageInstructionsController = TextEditingController();
+  final _equipmentSafetyTipsController = TextEditingController();
+  final _equipmentTutorialLinksController = TextEditingController();
+  List<String> safetyTips = [];
 
-  final _classDescriptionController = TextEditingController();
-
-  final _classScheduleController = TextEditingController();
-
-  final _classDurationController = TextEditingController();
-
-  final _classLocationController = TextEditingController();
-
-  final _classDifficulityController = TextEditingController();
-
-  final _classCapacityController = TextEditingController();
-
-  final _classEquipmentController = TextEditingController();
-
-  final _classInstructionsController = TextEditingController();
-
-  List<String> equipment = [];
-
-  List<String> instructions = [];
+  List<String> tutorialLinks = [];
 
   late Uint8List image;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +40,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
         child: ListView(
           children: [
             Text(
-              'Add Class Info',
+              'Add Equipment Info',
               style: GoogleFonts.nunito(
                 color: MyColors.myOrange2,
                 fontSize: 18,
@@ -76,8 +61,8 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                   ),
                 ),
                 MyTextField(
-                  hint: 'Yoga',
-                  controller: _classNameController,
+                  hint: 'Treadmill',
+                  controller: _equipmentNameController,
                   inputType: TextInputType.name,
                   actionType: TextInputAction.next,
                 ),
@@ -96,53 +81,14 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                   ),
                 ),
                 MyTextField(
-                  hint: 'what the class is about',
-                  controller: _classDescriptionController,
+                  hint: 'what the equipment is about',
+                  controller: _equipmentDiscriptionController,
                   inputType: TextInputType.name,
                   actionType: TextInputAction.next,
                 ),
               ],
             ),
-            //!schedule
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'schedule',
-                  style: GoogleFonts.nunito(
-                    color: MyColors.myOrange2,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                MyTextField(
-                  hint: 'Monday, Wednesday, Friday at 7 AM',
-                  controller: _classScheduleController,
-                  inputType: TextInputType.name,
-                  actionType: TextInputAction.next,
-                ),
-              ],
-            ),
-            //!duration
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'duration',
-                  style: GoogleFonts.nunito(
-                    color: MyColors.myOrange2,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                MyTextField(
-                  hint: '1 hour',
-                  controller: _classDurationController,
-                  inputType: TextInputType.name,
-                  actionType: TextInputAction.next,
-                ),
-              ],
-            ),
+
             //!location
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,19 +102,19 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                   ),
                 ),
                 MyTextField(
-                  hint: 'studio A',
-                  controller: _classLocationController,
+                  hint: 'Cardio Section',
+                  controller: _equipmentLocationController,
                   inputType: TextInputType.name,
                   actionType: TextInputAction.next,
                 ),
               ],
             ),
-            //!difficulty
+            //!usageInstructions
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'difficulty',
+                  'usage instructions',
                   style: GoogleFonts.nunito(
                     color: MyColors.myOrange2,
                     fontSize: 14,
@@ -176,36 +122,16 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                   ),
                 ),
                 MyTextField(
-                  hint: 'Beginner',
-                  controller: _classDifficulityController,
-                  inputType: TextInputType.name,
-                  actionType: TextInputAction.next,
-                ),
-              ],
-            ),
-            //!capacity
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'capacity',
-                  style: GoogleFonts.nunito(
-                    color: MyColors.myOrange2,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                MyTextField(
-                  hint: '20',
-                  controller: _classCapacityController,
-                  inputType: TextInputType.number,
+                  hint: 'Start slow and increase speed gradually.',
+                  controller: _equipmentUsageInstructionsController,
+                  inputType: TextInputType.text,
                   actionType: TextInputAction.next,
                 ),
               ],
             ),
             const SizedBox(height: 10),
             Text(
-              'equipment needed',
+              'safety tips',
               style: GoogleFonts.nunito(
                 color: MyColors.myOrange2,
                 fontSize: 14,
@@ -217,14 +143,14 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: equipment.length,
+                itemCount: safetyTips.length,
                 itemBuilder: (context, index) {
                   return Card(
                     color: MyColors.myGrey,
                     child: ListTile(
                       dense: true,
                       title: Text(
-                        equipment[index],
+                        safetyTips[index],
                         style: GoogleFonts.nunito(
                           color: MyColors.mywhite,
                           fontSize: 15,
@@ -237,7 +163,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                           color: MyColors.myOrange2,
                         ),
                         onPressed: () {
-                          equipment.removeAt(index);
+                          safetyTips.removeAt(index);
                           setState(() {});
                         },
                       ),
@@ -264,12 +190,12 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
-                        controller: _classEquipmentController,
+                        controller: _equipmentSafetyTipsController,
                         cursorColor: MyColors.mywhite,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
-                          hintText: 'Yoga mat',
+                          hintText: 'Wear proper running shoes.',
                           hintStyle: GoogleFonts.nunito(
                             color: MyColors.myGrey.withOpacity(0.5),
                             fontSize: 14,
@@ -285,9 +211,9 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                       color: MyColors.myOrange2,
                     ),
                     onPressed: () {
-                      if (_classEquipmentController.text.isEmpty) return;
-                      equipment.add(_classEquipmentController.text);
-                      _classEquipmentController.clear();
+                      if (_equipmentSafetyTipsController.text.isEmpty) return;
+                      safetyTips.add(_equipmentSafetyTipsController.text);
+                      _equipmentSafetyTipsController.clear();
                       setState(() {});
                     },
                   ),
@@ -296,7 +222,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
             ),
             const SizedBox(height: 10),
             Text(
-              'special instructions',
+              'tutorial links',
               style: GoogleFonts.nunito(
                 color: MyColors.myOrange2,
                 fontSize: 14,
@@ -308,14 +234,14 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: instructions.length,
+                itemCount: tutorialLinks.length,
                 itemBuilder: (context, index) {
                   return Card(
                     color: MyColors.myGrey,
                     child: ListTile(
                       dense: true,
                       title: Text(
-                        instructions[index],
+                        tutorialLinks[index],
                         style: GoogleFonts.nunito(
                           color: MyColors.mywhite,
                           fontSize: 15,
@@ -328,7 +254,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                           color: MyColors.myOrange2,
                         ),
                         onPressed: () {
-                          instructions.removeAt(index);
+                          tutorialLinks.removeAt(index);
                           setState(() {});
                         },
                       ),
@@ -355,13 +281,12 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
-                        controller: _classInstructionsController,
+                        controller: _equipmentTutorialLinksController,
                         cursorColor: MyColors.mywhite,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
-                          hintText:
-                              'Arrive early to adjust your bike settings.',
+                          hintText: 'https://example.com/treadmill-usage',
                           hintStyle: GoogleFonts.nunito(
                             color: MyColors.myGrey.withOpacity(0.5),
                             fontSize: 14,
@@ -377,9 +302,10 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                       color: MyColors.myOrange2,
                     ),
                     onPressed: () {
-                      if (_classInstructionsController.text.isEmpty) return;
-                      instructions.add(_classInstructionsController.text);
-                      _classInstructionsController.clear();
+                      if (_equipmentTutorialLinksController.text.isEmpty)
+                        return;
+                      tutorialLinks.add(_equipmentTutorialLinksController.text);
+                      _equipmentTutorialLinksController.clear();
                       setState(() {});
                     },
                   ),
@@ -472,24 +398,18 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                       ),
                     );
                   } else if (state is UploadSuccessState) {
-                    final GymClass gymclass = GymClass(
-                      name: _classNameController.text.trim(),
+                    final Equipment equipment = Equipment(
+                      name: _equipmentNameController.text.trim(),
                       imagePath: state.imageUrl,
-                      instructor:
-                          "${widget.trainer.firstName} ${widget.trainer.lastName}",
-                      description: _classDescriptionController.text.trim(),
-                      schedule: _classScheduleController.text.trim(),
-                      duration: _classDurationController.text.trim(),
-                      location: _classLocationController.text.trim(),
-                      difficulty: _classDifficulityController.text.trim(),
-                      capacity: int.parse(_classCapacityController.text),
-                      equipmentNeeded: equipment,
-                      specialInstructions: instructions,
-                      trainerId: widget.trainer.userid,
-                      memberIds: [],
+                      description: _equipmentDiscriptionController.text.trim(),
+                      location: _equipmentLocationController.text.trim(),
+                      usageInstructions:
+                          _equipmentUsageInstructionsController.text.trim(),
+                      safetyTips: safetyTips,
+                      tutorialLinks: tutorialLinks,
                     );
-                    context.read<ClassBloc>().add(
-                          AddClass(gymclass: gymclass),
+                    context.read<EquipmentBloc>().add(
+                          AddEquipmentEvent(equipment: equipment),
                         );
                   }
                 },
@@ -515,9 +435,9 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                       ],
                     );
                   } else {
-                    return BlocConsumer<ClassBloc, ClassState>(
+                    return BlocConsumer<EquipmentBloc, EquipmentState>(
                         listener: (context, state) {
-                      if (state is ClassAdded) {
+                      if (state is EquipmentAdded) {
                         showToastMessage(
                           context,
                           state.message,
@@ -533,7 +453,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                           'mainscreen',
                           (Route<dynamic> route) => false,
                         );
-                      } else if (state is ClassError) {
+                      } else if (state is EquipmentError) {
                         showToastMessage(
                           context,
                           state.message,
@@ -545,11 +465,11 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                         );
                       }
                     }, builder: (context, state) {
-                      if (state is ClassLoading) {
+                      if (state is EquipmentLoading) {
                         return Row(
                           children: [
                             Text(
-                              "uploadnig class info",
+                              "uploadnig equipment info",
                               style: GoogleFonts.nunito(
                                 color: MyColors.myOrange2,
                                 fontSize: 16,
@@ -572,7 +492,8 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                           onPressed: () async {
                             context.read<UploadBloc>().add(UploadImagesEvent(
                                 image: image,
-                                path: 'classes/${_classNameController.text}'));
+                                path:
+                                    'equipment/${_equipmentNameController.text}'));
                           },
                           style: ButtonStyle(
                               shape: WidgetStateProperty.all(
@@ -583,7 +504,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                               backgroundColor:
                                   WidgetStateProperty.all(MyColors.myOrange2)),
                           child: Text(
-                            'Create',
+                            'Add',
                             style: GoogleFonts.nunito(
                               color: MyColors.mywhite,
                               fontSize: 12,

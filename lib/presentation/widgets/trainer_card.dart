@@ -90,9 +90,9 @@ class TrainerCard extends StatelessWidget {
                                   Icons.star_half,
                                   color: Colors.amber,
                                 ),
-                                empty: const Icon(
+                                empty: Icon(
                                   Icons.star,
-                                  color: Colors.grey,
+                                  color: Colors.grey.shade300,
                                 ),
                               ),
                               onRatingUpdate: (value) {},

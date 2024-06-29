@@ -5,16 +5,23 @@ import 'package:gym/data/models/usr_model.dart';
 import 'package:gym/logic/class_bloc/class_bloc.dart';
 import 'package:gym/logic/equipment_bloc/equipment_bloc.dart';
 import 'package:gym/logic/image_bloc/image_bloc.dart';
+import 'package:gym/logic/jobs_bloc/jobs_bloc.dart';
+import 'package:gym/logic/schedule_bloc/schedule_bloc.dart';
 import 'package:gym/logic/trainers_bloc/trainers_bloc.dart';
 import 'package:gym/logic/upload_bloc/upload_bloc.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
+import 'package:gym/presentation/screens/add_equipment_screen.dart';
 import 'package:gym/presentation/screens/assigned_classes_screen.dart';
 import 'package:gym/presentation/screens/class_details_screen.dart';
 import 'package:gym/presentation/screens/create_class_screen.dart';
+import 'package:gym/presentation/screens/create_job_screen.dart';
+import 'package:gym/presentation/screens/edit_schedule_screen.dart';
 import 'package:gym/presentation/screens/enrolled_classes_screen.dart';
 import 'package:gym/presentation/screens/forget_password.dart';
+import 'package:gym/presentation/screens/jobs_screen.dart';
 import 'package:gym/presentation/screens/log_in_screen.dart';
 import 'package:gym/presentation/screens/main_screen.dart';
+import 'package:gym/presentation/screens/schedule_screen.dart';
 import 'package:gym/presentation/screens/sign_up_screen.dart';
 import 'package:gym/presentation/screens/welcome_screen.dart';
 
@@ -25,6 +32,8 @@ class AppRouter {
   late ImageBloc imageBloc;
   late UploadBloc uploadBloc;
   late TrainersBloc trainersBloc;
+  late JobsBloc jobsBloc;
+  late ScheduleBloc scheduleBloc;
 
   AppRouter() {
     userBloc = UserBloc();
@@ -33,6 +42,8 @@ class AppRouter {
     imageBloc = ImageBloc();
     uploadBloc = UploadBloc();
     trainersBloc = TrainersBloc();
+    jobsBloc = JobsBloc();
+    scheduleBloc = ScheduleBloc();
   }
 
   Route? onGenerateRoute(RouteSettings settings) {
@@ -110,6 +121,47 @@ class AppRouter {
           builder: (_) => BlocProvider.value(
             value: classBloc,
             child: EnrolledClassesScreen(participantId: participantId),
+          ),
+        );
+      case 'addequipment':
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: imageBloc),
+              BlocProvider.value(value: uploadBloc),
+              BlocProvider.value(value: equipmentBloc),
+            ],
+            child: const AddEquipmentScreen(),
+          ),
+        );
+      case 'createjobscreen':
+        final Admin admin = settings.arguments as Admin;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: jobsBloc,
+            child: CreateJobScreen(admin: admin),
+          ),
+        );
+      case 'jobsscreen':
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: jobsBloc,
+            child: const JobsScreen(),
+          ),
+        );
+
+      case 'shedulescreen':
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: scheduleBloc,
+            child: const ScheduleScreen(),
+          ),
+        );
+      case 'editschedule':
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: scheduleBloc,
+            child: const EditScheduleScreen(),
           ),
         );
     }

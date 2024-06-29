@@ -9,10 +9,10 @@ sealed class EquipmentEvent extends Equatable {
 
 class GetAllEquipment extends EquipmentEvent {}
 
-class AddEquipment extends EquipmentEvent {
+class AddEquipmentEvent extends EquipmentEvent {
   final Equipment equipment;
 
-  const AddEquipment({required this.equipment});
+  const AddEquipmentEvent({required this.equipment});
 }
 
 class DeleteEquipment extends EquipmentEvent {

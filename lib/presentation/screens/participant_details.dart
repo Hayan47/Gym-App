@@ -62,7 +62,7 @@ class ParticipantDetails extends StatelessWidget {
                     },
                     child: participant.height == 0
                         ? Text(
-                            'add',
+                            'Add',
                             style: GoogleFonts.nunito(
                               color: MyColors.mywhite,
                               fontSize: 14,
@@ -114,7 +114,7 @@ class ParticipantDetails extends StatelessWidget {
                     },
                     child: participant.weight == 0
                         ? Text(
-                            'add',
+                            'Add',
                             style: GoogleFonts.nunito(
                               color: MyColors.mywhite,
                               fontSize: 14,
@@ -162,31 +162,31 @@ class ParticipantDetails extends StatelessWidget {
           ),
         ),
         //! My Membership
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: ListTile(
-            onTap: () {
-              Navigator.pushNamed(context, 'mymembershipscreen',
-                  arguments: participant.userid);
-            },
-            leading: const Icon(
-              Icons.library_books_rounded,
-              color: MyColors.myOrange2,
-            ),
-            title: Text(
-              'My Membership',
-              style: GoogleFonts.nunito(
-                color: MyColors.myOrange2,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            trailing: const Icon(
-              Icons.keyboard_arrow_right_rounded,
-              color: MyColors.myOrange2,
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(vertical: 5),
+        //   child: ListTile(
+        //     onTap: () {
+        //       Navigator.pushNamed(context, 'mymembershipscreen',
+        //           arguments: participant.userid);
+        //     },
+        //     leading: const Icon(
+        //       Icons.library_books_rounded,
+        //       color: MyColors.myOrange2,
+        //     ),
+        //     title: Text(
+        //       'My Membership',
+        //       style: GoogleFonts.nunito(
+        //         color: MyColors.myOrange2,
+        //         fontSize: 16,
+        //         fontWeight: FontWeight.bold,
+        //       ),
+        //     ),
+        //     trailing: const Icon(
+        //       Icons.keyboard_arrow_right_rounded,
+        //       color: MyColors.myOrange2,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

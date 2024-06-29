@@ -41,46 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDvi_S9W8Noiwd3y_lhZCZgwp7ZjBqROmk',
-    appId: '1:357972818639:web:586eb85e0a9fc5582515ba',
-    messagingSenderId: '357972818639',
-    projectId: 'gymzone-ad0ce',
-    authDomain: 'gymzone-ad0ce.firebaseapp.com',
-    storageBucket: 'gymzone-ad0ce.appspot.com',
+    apiKey: 'AIzaSyDxQjCGJzlhBWTsm0stY5C_USLONkbtN-c',
+    appId: '1:1062442899194:web:a67b2659edcbfe0652db43',
+    messagingSenderId: '1062442899194',
+    projectId: 'gymzone-107b5',
+    authDomain: 'gymzone-107b5.firebaseapp.com',
+    storageBucket: 'gymzone-107b5.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA7-tQRJ5kAE-ZTLGx0HenLmP0E_B2htl8',
-    appId: '1:357972818639:android:1006a7331da758162515ba',
-    messagingSenderId: '357972818639',
-    projectId: 'gymzone-ad0ce',
-    storageBucket: 'gymzone-ad0ce.appspot.com',
+    apiKey: 'AIzaSyDkrUURVwIXYvFREpNje0AuMBxmGEzqcY8',
+    appId: '1:1062442899194:android:c4835ce5363f48e552db43',
+    messagingSenderId: '1062442899194',
+    projectId: 'gymzone-107b5',
+    storageBucket: 'gymzone-107b5.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyClJkhYe974dbRHOfybTAc3-IcQ2zfKhyc',
-    appId: '1:357972818639:ios:22d6980fbe8037f72515ba',
-    messagingSenderId: '357972818639',
-    projectId: 'gymzone-ad0ce',
-    storageBucket: 'gymzone-ad0ce.appspot.com',
+    apiKey: 'AIzaSyAl9duUyAV9xUmyHU_8l-705YXFl4Iy5OA',
+    appId: '1:1062442899194:ios:2ffed6da3921daa452db43',
+    messagingSenderId: '1062442899194',
+    projectId: 'gymzone-107b5',
+    storageBucket: 'gymzone-107b5.appspot.com',
     iosBundleId: 'com.example.gym',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyClJkhYe974dbRHOfybTAc3-IcQ2zfKhyc',
-    appId: '1:357972818639:ios:22d6980fbe8037f72515ba',
-    messagingSenderId: '357972818639',
-    projectId: 'gymzone-ad0ce',
-    storageBucket: 'gymzone-ad0ce.appspot.com',
+    apiKey: 'AIzaSyAl9duUyAV9xUmyHU_8l-705YXFl4Iy5OA',
+    appId: '1:1062442899194:ios:2ffed6da3921daa452db43',
+    messagingSenderId: '1062442899194',
+    projectId: 'gymzone-107b5',
+    storageBucket: 'gymzone-107b5.appspot.com',
     iosBundleId: 'com.example.gym',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDvi_S9W8Noiwd3y_lhZCZgwp7ZjBqROmk',
-    appId: '1:357972818639:web:6e0b986191a461f02515ba',
-    messagingSenderId: '357972818639',
-    projectId: 'gymzone-ad0ce',
-    authDomain: 'gymzone-ad0ce.firebaseapp.com',
-    storageBucket: 'gymzone-ad0ce.appspot.com',
+    apiKey: 'AIzaSyDxQjCGJzlhBWTsm0stY5C_USLONkbtN-c',
+    appId: '1:1062442899194:web:954e57ba8695850952db43',
+    messagingSenderId: '1062442899194',
+    projectId: 'gymzone-107b5',
+    authDomain: 'gymzone-107b5.firebaseapp.com',
+    storageBucket: 'gymzone-107b5.appspot.com',
   );
+
 }

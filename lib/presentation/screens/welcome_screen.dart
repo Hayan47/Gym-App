@@ -10,7 +10,7 @@ class WelcomeScreen extends StatelessWidget {
     return DecoratedBox(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/img/image3.png'), fit: BoxFit.cover),
+            image: AssetImage('assets/img/background.jpg'), fit: BoxFit.cover),
       ),
       child: Center(
         child: Padding(
@@ -28,30 +28,28 @@ class WelcomeScreen extends StatelessWidget {
                     'The Body Achieves What The Mind Believes',
                     style: GoogleFonts.nunito(
                       decoration: TextDecoration.none,
-                      color: MyColors.myBlue4,
+                      color: Colors.white,
                       fontSize: MediaQuery.sizeOf(context).width * 0.07,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () async {
+                  TextButton(
+                    onPressed: () async {
                       Navigator.pushNamed(context, 'mainscreen');
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: MyColors.myOrange2,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'continue',
-                          style: GoogleFonts.nunito(
-                            decoration: TextDecoration.none,
-                            color: MyColors.myBlue4,
-                            fontSize: MediaQuery.sizeOf(context).width * 0.07,
-                          ),
-                        ),
+                    style: ButtonStyle(
+                        shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8))),
+                        fixedSize: WidgetStateProperty.all(const Size(160, 40)),
+                        backgroundColor:
+                            WidgetStateProperty.all(MyColors.myOrange2)),
+                    child: Text(
+                      'Continue',
+                      style: GoogleFonts.nunito(
+                        color: MyColors.mywhite,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
