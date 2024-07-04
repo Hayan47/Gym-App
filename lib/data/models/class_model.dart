@@ -15,6 +15,7 @@ class GymClass {
   final List<String> specialInstructions;
   final String trainerId;
   final List<String> memberIds;
+  final String state;
 
   GymClass({
     this.classid,
@@ -31,6 +32,7 @@ class GymClass {
     required this.specialInstructions,
     required this.trainerId,
     required this.memberIds,
+    required this.state,
   });
 
   // fromFirestore factory constructor
@@ -55,6 +57,7 @@ class GymClass {
           List<String>.from(data?['specialInstructions'] ?? []),
       trainerId: data?['trainerId'],
       memberIds: List<String>.from(data?['memberIds'] ?? []),
+      state: data?['state'],
     );
   }
 
@@ -74,6 +77,7 @@ class GymClass {
       'specialInstructions': specialInstructions,
       'trainerId': trainerId,
       'memberIds': memberIds,
+      'state': state,
     };
   }
 }

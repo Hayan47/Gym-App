@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
 import 'package:gym/data/models/equipment_model.dart';
+import 'package:gym/presentation/widgets/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EquipmentCard extends StatelessWidget {
   final Equipment equipment;
@@ -117,11 +119,32 @@ class EquipmentCard extends StatelessWidget {
               (index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Text(
-                    "${index + 1}- ${equipment.tutorialLinks[index]}",
-                    style: GoogleFonts.nunito(
-                      color: Colors.white,
-                      fontSize: 17,
+                  child: GestureDetector(
+                    onTap: () async {
+                      print(equipment.tutorialLinks[index]);
+                      final Uri video = Uri.parse(
+                        equipment.tutorialLinks[index],
+                      );
+                      if (await canLaunchUrl(video)) {
+                        await launchUrl(video);
+                      } else {
+                        showToastMessage(
+                          context,
+                          'can\'t open link',
+                          const Icon(
+                            Icons.error,
+                            color: MyColors.myred2,
+                            size: 20,
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(
+                      "Video ${index + 1}",
+                      style: GoogleFonts.nunito(
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                 );

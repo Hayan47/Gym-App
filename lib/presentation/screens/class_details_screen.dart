@@ -9,7 +9,6 @@ import 'package:gym/logic/trainers_bloc/trainers_bloc.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
 import 'package:gym/presentation/widgets/alert_dialog.dart';
 import 'package:gym/presentation/widgets/shimmer_card.dart';
-import 'package:gym/presentation/widgets/shimmer_trainers.dart';
 import 'package:gym/presentation/widgets/toast.dart';
 import 'package:gym/presentation/widgets/trainer_card.dart';
 import 'package:lottie/lottie.dart';
@@ -402,39 +401,76 @@ class ClassDetailsScreen extends StatelessWidget {
                                   'assets/lottie/SplashyLoader.json'),
                             );
                           } else {
-                            return TextButton(
-                              onPressed: () async {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) {
-                                    return MyAlertDialog(
-                                        onPressed: () {
-                                          context.read<ClassBloc>().add(
-                                                DeleteClass(gymclass: gymClass),
-                                              );
-                                        },
-                                        text:
-                                            'Are you sure you want to delete class?');
-                                  },
-                                );
-                              },
-                              style: ButtonStyle(
-                                  shape: WidgetStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8))),
-                                  fixedSize: WidgetStateProperty.all(
-                                      const Size(160, 40)),
-                                  backgroundColor: WidgetStateProperty.all(
-                                      MyColors.myOrange2)),
-                              child: Text(
-                                'Delete Class',
-                                style: GoogleFonts.nunito(
-                                  color: MyColors.mywhite,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                            return Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    gymClass.state == "pending"
+                                        ? const Icon(
+                                            Icons.circle,
+                                            color: MyColors.myOrange3,
+                                            size: 15,
+                                          )
+                                        : gymClass.state == "approved"
+                                            ? const Icon(
+                                                Icons.circle,
+                                                color: Colors.green,
+                                                size: 15,
+                                              )
+                                            : const Icon(
+                                                Icons.circle,
+                                                color: Colors.red,
+                                                size: 15,
+                                              ),
+                                    const SizedBox(width: 3),
+                                    Text(
+                                      gymClass.state,
+                                      style: GoogleFonts.nunito(
+                                        color: MyColors.myGrey,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                                TextButton(
+                                  onPressed: () async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return MyAlertDialog(
+                                            onPressed: () {
+                                              context.read<ClassBloc>().add(
+                                                    DeleteClass(
+                                                        gymclass: gymClass),
+                                                  );
+                                            },
+                                            text:
+                                                'Are you sure you want to delete class?');
+                                      },
+                                    );
+                                  },
+                                  style: ButtonStyle(
+                                      shape: WidgetStateProperty.all(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8))),
+                                      fixedSize: WidgetStateProperty.all(
+                                          const Size(160, 40)),
+                                      backgroundColor: WidgetStateProperty.all(
+                                          MyColors.myOrange2)),
+                                  child: Text(
+                                    'Delete Class',
+                                    style: GoogleFonts.nunito(
+                                      color: MyColors.mywhite,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             );
                           }
                         },
@@ -443,7 +479,97 @@ class ClassDetailsScreen extends StatelessWidget {
                       return Container();
                     }
                   } else {
-                    return Container();
+                    if (gymClass.state == "pending") {
+                      return BlocListener<ClassBloc, ClassState>(
+                        listener: (context, state) {
+                          if (state is ClassUpdated) {
+                            showToastMessage(
+                              context,
+                              state.message,
+                              const Icon(
+                                Icons.done,
+                                color: Colors.green,
+                                size: 20,
+                              ),
+                            );
+                            Navigator.pop(context);
+                            context.read<ClassBloc>().add(GetPendingClasses());
+                          } else if (state is ClassError) {
+                            showToastMessage(
+                              context,
+                              state.message,
+                              const Icon(
+                                Icons.error,
+                                color: MyColors.myred2,
+                                size: 20,
+                              ),
+                            );
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  context.read<ClassBloc>().add(
+                                        UpdateGymClassState(
+                                            classid: gymClass.classid!,
+                                            newState: "approved"),
+                                      );
+                                },
+                                style: ButtonStyle(
+                                    shape: WidgetStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8))),
+                                    fixedSize: WidgetStateProperty.all(
+                                        const Size(160, 40)),
+                                    backgroundColor: WidgetStateProperty.all(
+                                        MyColors.myOrange2)),
+                                child: Text(
+                                  'Accept',
+                                  style: GoogleFonts.nunito(
+                                    color: MyColors.mywhite,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  context.read<ClassBloc>().add(
+                                        UpdateGymClassState(
+                                            classid: gymClass.classid!,
+                                            newState: "rejected"),
+                                      );
+                                },
+                                style: ButtonStyle(
+                                    shape: WidgetStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8))),
+                                    fixedSize: WidgetStateProperty.all(
+                                        const Size(160, 40)),
+                                    backgroundColor: WidgetStateProperty.all(
+                                        MyColors.myGrey)),
+                                child: Text(
+                                  'Reject',
+                                  style: GoogleFonts.nunito(
+                                    color: MyColors.mywhite,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
                   }
                 } else {
                   return Container();

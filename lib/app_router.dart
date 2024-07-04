@@ -10,13 +10,14 @@ import 'package:gym/logic/schedule_bloc/schedule_bloc.dart';
 import 'package:gym/logic/trainers_bloc/trainers_bloc.dart';
 import 'package:gym/logic/upload_bloc/upload_bloc.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
-import 'package:gym/presentation/screens/add_equipment_screen.dart';
-import 'package:gym/presentation/screens/assigned_classes_screen.dart';
+import 'package:gym/presentation/screens/admin/add_equipment_screen.dart';
+import 'package:gym/presentation/screens/admin/pending_classes_screen.dart';
+import 'package:gym/presentation/screens/trainer/assigned_classes_screen.dart';
 import 'package:gym/presentation/screens/class_details_screen.dart';
-import 'package:gym/presentation/screens/create_class_screen.dart';
-import 'package:gym/presentation/screens/create_job_screen.dart';
-import 'package:gym/presentation/screens/edit_schedule_screen.dart';
-import 'package:gym/presentation/screens/enrolled_classes_screen.dart';
+import 'package:gym/presentation/screens/trainer/create_class_screen.dart';
+import 'package:gym/presentation/screens/admin/create_job_screen.dart';
+import 'package:gym/presentation/screens/admin/edit_schedule_screen.dart';
+import 'package:gym/presentation/screens/participant/enrolled_classes_screen.dart';
 import 'package:gym/presentation/screens/forget_password.dart';
 import 'package:gym/presentation/screens/jobs_screen.dart';
 import 'package:gym/presentation/screens/log_in_screen.dart';
@@ -162,6 +163,13 @@ class AppRouter {
           builder: (_) => BlocProvider.value(
             value: scheduleBloc,
             child: const EditScheduleScreen(),
+          ),
+        );
+      case 'pendingclassesscreen':
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: classBloc,
+            child: const PendingClassesScreen(),
           ),
         );
     }

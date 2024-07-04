@@ -487,6 +487,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                       specialInstructions: instructions,
                       trainerId: widget.trainer.userid,
                       memberIds: [],
+                      state: "pending",
                     );
                     context.read<ClassBloc>().add(
                           AddClass(gymclass: gymclass),

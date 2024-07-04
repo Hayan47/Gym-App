@@ -166,6 +166,31 @@ class AdminPanelScreen extends StatelessWidget {
             ),
           ),
         ),
+        //! pending classes
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+          child: ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, 'pendingclassesscreen');
+            },
+            leading: const Icon(
+              FontAwesomeIcons.personRunning,
+              color: MyColors.myOrange2,
+            ),
+            title: Text(
+              'Pending Classes',
+              style: GoogleFonts.nunito(
+                color: MyColors.myOrange2,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              color: MyColors.myOrange2,
+            ),
+          ),
+        ),
         //! add Job
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),

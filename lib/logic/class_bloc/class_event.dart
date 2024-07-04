@@ -9,6 +9,8 @@ sealed class ClassEvent extends Equatable {
 
 class GetAllClasses extends ClassEvent {}
 
+class GetPendingClasses extends ClassEvent {}
+
 class AddClass extends ClassEvent {
   final GymClass gymclass;
 
@@ -38,4 +40,11 @@ class JoinClass extends ClassEvent {
   final String classId;
 
   const JoinClass({required this.userId, required this.classId});
+}
+
+class UpdateGymClassState extends ClassEvent {
+  final String classid;
+  final String newState;
+
+  const UpdateGymClassState({required this.classid, required this.newState});
 }

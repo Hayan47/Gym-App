@@ -27,6 +27,7 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
             emit(const ImageError('No Image Selected'));
           }
         } catch (e) {
+          print(e);
           emit(const ImageError('image not picked correctly'));
         }
       } else if (event is NoImageSelectedEvent) {

@@ -1,7 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
-import 'package:gym/presentation/screens/participant_signup.dart';
-import 'package:gym/presentation/screens/trainer_signup.dart';
+import 'package:gym/presentation/screens/participant/participant_signup.dart';
+import 'package:gym/presentation/screens/trainer/trainer_signup.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {

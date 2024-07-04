@@ -9,6 +9,7 @@ class ClassService {
     List<GymClass> classes = [];
     var snapshot = await _store
         .collection('gymclass')
+        .where('state', isEqualTo: "approved")
         .withConverter<GymClass>(
           fromFirestore: GymClass.fromFirestore,
           toFirestore: (gymclass, options) => gymclass.toFirestore(),
@@ -131,5 +132,30 @@ class ClassService {
     }
 
     return classes;
+  }
+
+  //?get pending classes
+  Future<List<GymClass>> getPendingClasses() async {
+    List<GymClass> classes = [];
+    var snapshot = await _store
+        .collection('gymclass')
+        .where('state', isEqualTo: "pending")
+        .withConverter<GymClass>(
+          fromFirestore: GymClass.fromFirestore,
+          toFirestore: (gymclass, options) => gymclass.toFirestore(),
+        )
+        .get();
+
+    for (var doc in snapshot.docs) {
+      var gymclass = doc.data();
+      classes.add(gymclass);
+    }
+    return classes;
+  }
+
+  //?update class state
+  Future<void> updateGymClassState(String gymClassId, String newState) async {
+    var docRef = _store.collection('gymclass').doc(gymClassId);
+    await docRef.update({'state': newState});
   }
 }

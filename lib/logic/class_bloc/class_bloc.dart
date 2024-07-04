@@ -11,6 +11,7 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
   List<GymClass> allClasses = [];
   List<GymClass> trainerClasses = [];
   List<GymClass> participantClasses = [];
+  List<GymClass> pendingClasses = [];
   ClassBloc() : super(ClassInitial()) {
     on<GetAllClasses>(
       (event, emit) async {
@@ -21,7 +22,7 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
           emit(ClassLoaded(gymclasses: allClasses));
           print(state);
         } catch (e) {
-          emit(ClassError(message: e.toString()));
+          emit(const ClassError(message: "error getting classes"));
           print(state);
         }
       },
@@ -36,7 +37,7 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
           // add(GetAllCarsEvent());
           print(state);
         } catch (e) {
-          emit(ClassError(message: e.toString()));
+          emit(const ClassError(message: "error adding class"));
           print(state);
         }
       },
@@ -50,7 +51,7 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
           // add(GetAllCarsEvent());
           print(state);
         } catch (e) {
-          emit(ClassError(message: e.toString()));
+          emit(const ClassError(message: "error deleting class"));
           print(state);
         }
       },
@@ -66,7 +67,7 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
           emit(ClassLoaded(gymclasses: trainerClasses));
           print(state);
         } catch (e) {
-          emit(ClassError(message: e.toString()));
+          emit(const ClassError(message: "error getting classes"));
           print(state);
         }
       },
@@ -82,7 +83,7 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
           emit(ClassLoaded(gymclasses: participantClasses));
           print(state);
         } catch (e) {
-          emit(ClassError(message: e.toString()));
+          emit(const ClassError(message: "error getting classes"));
           print(state);
         }
       },
@@ -97,7 +98,41 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
           emit(const ClassJoined(message: 'class joined successfully'));
           print(state);
         } catch (e) {
-          emit(ClassError(message: e.toString()));
+          emit(const ClassError(message: "error joining class"));
+          print(state);
+        }
+      },
+    );
+
+    on<GetPendingClasses>(
+      (event, emit) async {
+        try {
+          emit(ClassLoading());
+          print(state);
+          pendingClasses = await classService.getPendingClasses();
+          emit(ClassLoaded(gymclasses: pendingClasses));
+          print(state);
+        } catch (e) {
+          emit(const ClassError(message: "error getting classes"));
+          print(state);
+        }
+      },
+    );
+
+    on<UpdateGymClassState>(
+      (event, emit) async {
+        try {
+          emit(ClassLoading());
+          print(state);
+          await classService.updateGymClassState(event.classid, event.newState);
+          if (event.newState == "approved") {
+            emit(const ClassUpdated(message: 'class approved'));
+          } else {
+            emit(const ClassUpdated(message: 'class rejected'));
+          }
+          print(state);
+        } catch (e) {
+          emit(const ClassError(message: "error updating class state"));
           print(state);
         }
       },

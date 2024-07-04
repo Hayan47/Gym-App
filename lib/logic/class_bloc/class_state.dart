@@ -55,3 +55,9 @@ final class ClassJoined extends ClassState {
   @override
   List<Object> get props => [message];
 }
+
+final class ClassUpdated extends ClassState {
+  final String message;
+
+  const ClassUpdated({required this.message});
+}
