@@ -6,12 +6,15 @@ import 'package:gym/logic/class_bloc/class_bloc.dart';
 import 'package:gym/logic/equipment_bloc/equipment_bloc.dart';
 import 'package:gym/logic/image_bloc/image_bloc.dart';
 import 'package:gym/logic/jobs_bloc/jobs_bloc.dart';
+import 'package:gym/logic/membership_bloc/membership_bloc.dart';
 import 'package:gym/logic/schedule_bloc/schedule_bloc.dart';
 import 'package:gym/logic/trainers_bloc/trainers_bloc.dart';
 import 'package:gym/logic/upload_bloc/upload_bloc.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
 import 'package:gym/presentation/screens/admin/add_equipment_screen.dart';
 import 'package:gym/presentation/screens/admin/pending_classes_screen.dart';
+import 'package:gym/presentation/screens/admin/pending_memberships_screen.dart';
+import 'package:gym/presentation/screens/participant/mymembership_screen.dart';
 import 'package:gym/presentation/screens/trainer/assigned_classes_screen.dart';
 import 'package:gym/presentation/screens/class_details_screen.dart';
 import 'package:gym/presentation/screens/trainer/create_class_screen.dart';
@@ -35,6 +38,7 @@ class AppRouter {
   late TrainersBloc trainersBloc;
   late JobsBloc jobsBloc;
   late ScheduleBloc scheduleBloc;
+  late MembershipBloc membershipBloc;
 
   AppRouter() {
     userBloc = UserBloc();
@@ -45,6 +49,7 @@ class AppRouter {
     trainersBloc = TrainersBloc();
     jobsBloc = JobsBloc();
     scheduleBloc = ScheduleBloc();
+    membershipBloc = MembershipBloc();
   }
 
   Route? onGenerateRoute(RouteSettings settings) {
@@ -112,6 +117,7 @@ class AppRouter {
               BlocProvider.value(value: trainersBloc),
               BlocProvider.value(value: userBloc),
               BlocProvider.value(value: classBloc),
+              BlocProvider.value(value: membershipBloc),
             ],
             child: ClassDetailsScreen(gymClass: gymClass),
           ),
@@ -172,6 +178,21 @@ class AppRouter {
             child: const PendingClassesScreen(),
           ),
         );
+      case 'mymembershipscreen':
+        final Participant participant = settings.arguments as Participant;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: membershipBloc,
+            child: MymembershipScreen(participant: participant),
+          ),
+        );
+      case 'pendingmembershipsscreen':
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: membershipBloc,
+            child: const PendingMembershipsScreen(),
+          ),
+        );
     }
     return null;
   }
@@ -183,5 +204,8 @@ class AppRouter {
     imageBloc.close();
     uploadBloc.close();
     trainersBloc.close();
+    jobsBloc.close();
+    scheduleBloc.close();
+    membershipBloc.close();
   }
 }

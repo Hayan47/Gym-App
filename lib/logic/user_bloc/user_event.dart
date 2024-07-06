@@ -106,18 +106,6 @@ class GetUserInfo extends UserEvent {
   const GetUserInfo({required this.userID});
 }
 
-// class GetUserCars extends UserEvent {
-//   final String userID;
-
-//   const GetUserCars({required this.userID});
-// }
-
-class GetUserReservation extends UserEvent {
-  final String userID;
-
-  const GetUserReservation({required this.userID});
-}
-
 class ResetPassword extends UserEvent {
   final String email;
 

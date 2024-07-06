@@ -50,17 +50,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             role: event.role,
             profilePicture: event.profilePicture,
             assignedClasses: event.assignedClasses,
-            attendanceRecord: event.attendanceRecord,
             bio: event.bio,
-            certifications: event.certifications,
             enrolledClasses: event.enrolledClasses,
             height: event.height,
             weight: event.weight,
-            membershipExpiry: event.membershipExpiry,
-            membershipId: event.membershipId,
-            membershipType: event.membershipType,
             rating: event.rating,
-            schedule: event.schedule,
             specializations: event.specializations,
           );
           add(GetUserInfo(userID: userCredentials.user!.uid));

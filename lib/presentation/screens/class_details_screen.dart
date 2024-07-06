@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/constants/my_colors.dart';
 import 'package:gym/data/models/class_model.dart';
+import 'package:gym/data/models/membership_model.dart';
 import 'package:gym/data/models/usr_model.dart';
 import 'package:gym/logic/class_bloc/class_bloc.dart';
+import 'package:gym/logic/membership_bloc/membership_bloc.dart';
 import 'package:gym/logic/trainers_bloc/trainers_bloc.dart';
 import 'package:gym/logic/user_bloc/user_bloc.dart';
 import 'package:gym/presentation/widgets/alert_dialog.dart';
@@ -328,36 +330,77 @@ class ClassDetailsScreen extends StatelessWidget {
                               ),
                             );
                           } else {
-                            return TextButton(
-                              onPressed: () async {
-                                if (gymClass.capacity -
-                                        gymClass.memberIds.length ==
-                                    0) {
-                                  return;
+                            context.read<MembershipBloc>().add(GetMemberships(
+                                userid: userstate.userInfo.userid));
+                            return BlocBuilder<MembershipBloc, MembershipState>(
+                              builder: (context, state) {
+                                if (state is MembershipLoaded) {
+                                  return TextButton(
+                                    onPressed: () async {
+                                      bool hasActive = false;
+                                      //!loop through memberships and check
+                                      for (Membership membership
+                                          in state.memberships) {
+                                        if (membership.state == "active") {
+                                          hasActive = true;
+                                          break;
+                                        }
+                                        //!no active membership
+                                        if (!hasActive) {
+                                          showToastMessage(
+                                            context,
+                                            "You have no active membership",
+                                            const Icon(
+                                              Icons.error,
+                                              color: MyColors.myred2,
+                                              size: 20,
+                                            ),
+                                          );
+                                          return;
+                                        }
+                                      }
+                                      //!found active membership
+                                      //!check for remaining places
+                                      if (gymClass.capacity -
+                                              gymClass.memberIds.length ==
+                                          0) {
+                                        return;
+                                      }
+                                      context.read<ClassBloc>().add(
+                                            JoinClass(
+                                                userId:
+                                                    userstate.userInfo.userid,
+                                                classId: gymClass.classid!),
+                                          );
+                                    },
+                                    style: ButtonStyle(
+                                        shape: WidgetStateProperty.all(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8))),
+                                        fixedSize: WidgetStateProperty.all(
+                                            const Size(160, 40)),
+                                        backgroundColor:
+                                            WidgetStateProperty.all(
+                                                MyColors.myOrange2)),
+                                    child: Text(
+                                      'Join Class',
+                                      style: GoogleFonts.nunito(
+                                        color: MyColors.mywhite,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return SizedBox(
+                                    width: 70,
+                                    height: 40,
+                                    child: Lottie.asset(
+                                        'assets/lottie/SplashyLoader.json'),
+                                  );
                                 }
-                                context.read<ClassBloc>().add(
-                                      JoinClass(
-                                          userId: userstate.userInfo.userid,
-                                          classId: gymClass.classid!),
-                                    );
                               },
-                              style: ButtonStyle(
-                                  shape: WidgetStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8))),
-                                  fixedSize: WidgetStateProperty.all(
-                                      const Size(160, 40)),
-                                  backgroundColor: WidgetStateProperty.all(
-                                      MyColors.myOrange2)),
-                              child: Text(
-                                'Join Class',
-                                style: GoogleFonts.nunito(
-                                  color: MyColors.mywhite,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
                             );
                           }
                         }

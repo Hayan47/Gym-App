@@ -4,7 +4,7 @@ import '../models/usr_model.dart';
 
 class UserServices {
   final auth = FirebaseAuth.instance;
-  final store = FirebaseFirestore.instance;
+  final _store = FirebaseFirestore.instance;
 
   //? sign in
   Future<UserCredential> signIn(String email, String password) async {
@@ -30,18 +30,12 @@ class UserServices {
     String? profilePicture,
     // Additional fields for Trainer
     List<String>? specializations,
-    List<String>? certifications,
-    Map<String, List<String>>? schedule,
     List<String>? assignedClasses,
     String? bio,
     double? rating,
     int? numberOfRatings,
     // Additional fields for Participant
-    String? membershipId,
-    String? membershipType,
-    DateTime? membershipExpiry,
     List<String>? enrolledClasses,
-    Map<DateTime, String>? attendanceRecord,
     int? height,
     int? weight,
   }) async {
@@ -64,17 +58,11 @@ class UserServices {
       profilePicture: profilePicture,
       gender: gender,
       specializations: specializations,
-      certifications: certifications,
-      schedule: schedule,
       assignedClasses: assignedClasses,
       bio: bio,
       rating: rating,
       numberOfRatings: numberOfRatings,
-      membershipId: membershipId,
-      membershipType: membershipType,
-      membershipExpiry: membershipExpiry,
       enrolledClasses: enrolledClasses,
-      attendanceRecord: attendanceRecord,
       height: height,
       weight: weight,
     );
@@ -95,18 +83,12 @@ class UserServices {
     String? profilePicture,
     // Additional fields for Trainer
     List<String>? specializations,
-    List<String>? certifications,
-    Map<String, List<String>>? schedule,
     List<String>? assignedClasses,
     String? bio,
     double? rating,
     int? numberOfRatings,
     // Additional fields for Participant
-    String? membershipId,
-    String? membershipType,
-    DateTime? membershipExpiry,
     List<String>? enrolledClasses,
-    Map<DateTime, String>? attendanceRecord,
     int? height,
     int? weight,
   }) async {
@@ -154,30 +136,19 @@ class UserServices {
 
   //? add img
   Future addImage(String url, String id) async {
-    await store.collection('users').doc(id).update({
+    await _store.collection('users').doc(id).update({
       'profilePicture': url,
     });
   }
 
   //? get user info
   Future<Usr?> getUserInfo(String userId) async {
-    final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userId);
+    final userDocRef = _store.collection('users').doc(userId);
     final userDoc = await userDocRef.get();
 
-    if (!userDoc.exists) {
-      return null; // User not found
-    }
-
     final userData = userDoc.data()!;
-    print(userData);
     final role = userData['role'];
     final roleDoc = await userDocRef.collection('details').doc(role).get();
-    print(roleDoc);
-
-    // if (!roleDoc.exists) {
-    //   return null; // Role details not found
-    // }
 
     if (role == 'admin') {
       return Admin.fromFirestore(userDoc);
@@ -197,14 +168,14 @@ class UserServices {
 
   //? add phone number
   Future addPhoneNumber(String phoneNumber, String userID) async {
-    await store.collection('users').doc(userID).update({
+    await _store.collection('users').doc(userID).update({
       'phoneNumber': phoneNumber,
     });
   }
 
   //? add height
   Future addHeight(int height, String userID) async {
-    await store
+    await _store
         .collection('users')
         .doc(userID)
         .collection('details')
@@ -216,27 +187,13 @@ class UserServices {
 
   //? add weight
   Future addWeight(int weight, String userID) async {
-    await store
+    await _store
         .collection('users')
         .doc(userID)
         .collection('details')
         .doc('participant')
         .update({
       'weight': weight,
-    });
-  }
-
-  //? add to favorite
-  Future addToFavorite(String carid, String userid) async {
-    await store.collection('users').doc(userid).update({
-      'favoriteCars': FieldValue.arrayUnion([carid])
-    });
-  }
-
-  //? remove from favorite
-  Future removeFromFavorite(String carid, String userid) async {
-    await store.collection('users').doc(userid).update({
-      'favoriteCars': FieldValue.arrayRemove([carid])
     });
   }
 }

@@ -153,7 +153,7 @@ class AdminPanelScreen extends StatelessWidget {
               color: MyColors.myOrange2,
             ),
             title: Text(
-              'Add Job',
+              'Add Job Opportunity',
               style: GoogleFonts.nunito(
                 color: MyColors.myOrange2,
                 fontSize: 16,
@@ -191,7 +191,32 @@ class AdminPanelScreen extends StatelessWidget {
             ),
           ),
         ),
-        //! add Job
+        //! pending memberships
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+          child: ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, 'pendingmembershipsscreen');
+            },
+            leading: const Icon(
+              Icons.library_books_rounded,
+              color: MyColors.myOrange2,
+            ),
+            title: Text(
+              'Pending Memberships',
+              style: GoogleFonts.nunito(
+                color: MyColors.myOrange2,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            trailing: const Icon(
+              Icons.keyboard_arrow_right_rounded,
+              color: MyColors.myOrange2,
+            ),
+          ),
+        ),
+        //! edit schedule
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),
           child: ListTile(
