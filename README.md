@@ -91,6 +91,8 @@ This Flutter project is a mobile application designed to handle gym operations u
 - **Schedule Management**: Admins can add holidays or adjust gym schedules.
 
 ### Screen Shots:
-![Gym Welcome Screen](https://github.com/Hayan47/Hayan47/blob/main/photo_2024-09-24_11-46-08.jpg)
-![Gym Home Screen](https://github.com/Hayan47/Hayan47/blob/main/photo_2024-09-24_11-44-05.jpg)
-![Gym Jobs Screen](https://github.com/Hayan47/Hayan47/blob/main/photo_2024-09-24_11-43-59.jpg)
+<p align="center">
+  <img src="https://github.com/Hayan47/Hayan47/blob/main/photo_2024-09-24_11-46-08.jpg" width="30%" />
+  <img src="https://github.com/Hayan47/Hayan47/blob/main/photo_2024-09-24_11-44-05.jpg" width="30%" />
+  <img src="https://github.com/Hayan47/Hayan47/blob/main/photo_2024-09-24_11-43-59.jpg" width="30%" />
+</p>
