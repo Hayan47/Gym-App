@@ -90,7 +90,7 @@ This Flutter project is a mobile application designed to handle gym operations u
 - **Class Approvals**: Admins can see pending classes and accept or reject them.
 - **Schedule Management**: Admins can add holidays or adjust gym schedules.
 
-### Screen Shots:
+### ScreenShots:
 <p align="center">
   <img src="https://github.com/Hayan47/Hayan47/blob/main/gym3.jpg" width="30%" />
   <img src="https://github.com/Hayan47/Hayan47/blob/main/gym2.jpg" width="30%" />
